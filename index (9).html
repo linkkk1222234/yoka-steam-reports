@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Steam新游月度监控 - 游卡网络战略分析组</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --yoka-red: #d4282d;
+  --yoka-dark: #1a1a1a;
+  --yoka-gold: #c9a063;
+}
+
+body {
+  font-family: "Noto Serif SC", "Microsoft YaHei", sans-serif;
+  background: #fff;
+  color: var(--yoka-dark);
+  line-height: 1.8;
+  overflow-x: hidden;
+}
+
+/* ===== Header ===== */
+.header {
+  background: linear-gradient(135deg, #1a1a1a 0%, #2a1a1a 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.header::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -10%;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(212,40,45,0.1) 0%, transparent 70%);
+}
+
+.nav-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 50px;
+  background: rgba(255,255,255,0.03);
+  backdrop-filter: blur(10px);
+}
+
+.logo-section {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.logo-section img {
+  height: 45px;
+  filter: brightness(0) invert(1);
+}
+
+.company-name {
+  color: #fff;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+.company-slogan {
+  color: rgba(255,255,255,0.5);
+  font-size: 12px;
+}
+
+.nav-links {
+  display: flex;
+  gap: 30px;
+}
+
+.nav-links a {
+  color: rgba(255,255,255,0.8);
+  text-decoration: none;
+  font-size: 14px;
+  transition: all 0.3s;
+  position: relative;
+}
+
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--yoka-red);
+  transition: width 0.3s;
+}
+
+.nav-links a:hover {
+  color: #fff;
+}
+
+.nav-links a:hover::after {
+  width: 100%;
+}
+
+.hero-section {
+  padding: 80px 50px 100px;
+  text-align: center;
+  position: relative;
+}
+
+.hero-title {
+  font-size: 56px;
+  font-weight: 900;
+  color: #fff;
+  margin-bottom: 15px;
+  letter-spacing: 3px;
+  text-shadow: 0 4px 20px rgba(212,40,45,0.3);
+}
+
+.hero-title-en {
+  font-size: 20px;
+  color: var(--yoka-gold);
+  letter-spacing: 8px;
+  text-transform: uppercase;
+  margin-bottom: 25px;
+  font-weight: 400;
+}
+
+.hero-desc {
+  font-size: 18px;
+  color: rgba(255,255,255,0.7);
+  max-width: 700px;
+  margin: 0 auto 40px;
+}
+
+.year-badge {
+  display: inline-block;
+  padding: 12px 40px;
+  background: var(--yoka-red);
+  color: #fff;
+  font-size: 18px;
+  font-weight: bold;
+  border-radius: 50px;
+  letter-spacing: 2px;
+  box-shadow: 0 8px 30px rgba(212,40,45,0.4);
+}
+
+/* ===== Main Content ===== */
+.main-content {
+  max-width: 1400px;
+  margin: -50px auto 0;
+  padding: 0 50px 80px;
+  position: relative;
+  z-index: 1;
+}
+
+.section-title {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.section-title h2 {
+  font-size: 36px;
+  color: var(--yoka-dark);
+  margin-bottom: 10px;
+  font-weight: 900;
+  letter-spacing: 2px;
+}
+
+.section-title-en {
+  font-size: 14px;
+  color: var(--yoka-gold);
+  letter-spacing: 6px;
+  text-transform: uppercase;
+}
+
+.section-divider {
+  width: 60px;
+  height: 4px;
+  background: linear-gradient(90deg, var(--yoka-red), var(--yoka-gold));
+  margin: 20px auto;
+}
+
+/* ===== Month Cards ===== */
+.months-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 30px;
+  margin-bottom: 80px;
+}
+
+.month-card {
+  background: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 20px rgba(0,0,0,0.08);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  border: 1px solid #f0f0f0;
+}
+
+.month-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(90deg, var(--yoka-red), var(--yoka-gold));
+  transform: scaleX(0);
+  transition: transform 0.4s;
+}
+
+.month-card:hover::before {
+  transform: scaleX(1);
+}
+
+.month-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 40px rgba(212,40,45,0.15);
+}
+
+.month-card.active {
+  border-color: var(--yoka-red);
+}
+
+.month-card.inactive {
+  opacity: 0.5;
+  filter: grayscale(0.8);
+}
+
+.month-card.inactive:hover {
+  transform: none;
+}
+
+.month-header {
+  padding: 30px 25px 20px;
+  background: linear-gradient(135deg, #f8f8f8 0%, #fff 100%);
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.month-number {
+  font-size: 56px;
+  font-weight: 900;
+  color: var(--yoka-red);
+  line-height: 1;
+  margin-bottom: 8px;
+}
+
+.month-name {
+  font-size: 16px;
+  color: #666;
+  letter-spacing: 2px;
+}
+
+.month-status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 16px;
+  background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+  color: #fff;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  margin-top: 12px;
+}
+
+.month-status-badge.pending {
+  background: linear-gradient(135deg, #94a3b8 0%, #64748b 100%);
+}
+
+.month-body {
+  padding: 25px;
+}
+
+.month-meta {
+  font-size: 13px;
+  color: #888;
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.month-meta::before {
+  content: '📅';
+}
+
+.month-summary {
+  font-size: 14px;
+  color: #555;
+  line-height: 1.8;
+  margin-bottom: 25px;
+  min-height: 50px;
+}
+
+.version-buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.version-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.3s;
+  border: 2px solid;
+}
+
+.version-btn.pc {
+  background: var(--yoka-red);
+  color: #fff;
+  border-color: var(--yoka-red);
+}
+
+.version-btn.pc:hover {
+  background: #b01f23;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(212,40,45,0.3);
+}
+
+.version-btn.mobile {
+  background: #fff;
+  color: var(--yoka-red);
+  border-color: var(--yoka-red);
+}
+
+.version-btn.mobile:hover {
+  background: var(--yoka-red);
+  color: #fff;
+}
+
+/* ===== Company Info ===== */
+.company-info {
+  background: linear-gradient(135deg, #f8f8f8 0%, #fff 100%);
+  padding: 60px 50px;
+  margin: 0 -50px;
+  text-align: center;
+}
+
+.mission-title {
+  font-size: 32px;
+  color: var(--yoka-dark);
+  font-weight: 900;
+  margin-bottom: 20px;
+  letter-spacing: 8px;
+}
+
+.mission-desc {
+  font-size: 16px;
+  color: #666;
+  line-height: 2;
+  margin-bottom: 40px;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.business-tags {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.business-tag {
+  padding: 10px 24px;
+  background: #fff;
+  border: 2px solid var(--yoka-red);
+  color: var(--yoka-dark);
+  border-radius: 25px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* ===== Footer ===== */
+.footer {
+  background: #1a1a1a;
+  color: rgba(255,255,255,0.6);
+  padding: 50px;
+  text-align: center;
+}
+
+.footer-logo img {
+  height: 40px;
+  filter: brightness(0) invert(1);
+  opacity: 0.8;
+  margin-bottom: 25px;
+}
+
+.footer-links {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  margin-bottom: 25px;
+  flex-wrap: wrap;
+}
+
+.footer-links a {
+  color: rgba(255,255,255,0.6);
+  text-decoration: none;
+  font-size: 13px;
+  transition: color 0.3s;
+}
+
+.footer-links a:hover {
+  color: var(--yoka-red);
+}
+
+.footer-info {
+  font-size: 13px;
+  line-height: 2;
+}
+
+.footer-copyright {
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255,255,255,0.1);
+  font-size: 12px;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 1024px) {
+  .months-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .nav-bar {
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px 30px;
+  }
+  
+  .nav-links {
+    gap: 15px;
+    font-size: 13px;
+  }
+  
+  .hero-section {
+    padding: 50px 30px 70px;
+  }
+  
+  .hero-title {
+    font-size: 36px;
+  }
+  
+  .hero-title-en {
+    font-size: 16px;
+  }
+  
+  .months-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .main-content {
+    padding: 0 20px 50px;
+  }
+  
+  .company-info {
+    padding: 40px 30px;
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<div class="header">
+  <div class="nav-bar">
+    <div class="logo-section">
+      <img src="https://www.yokaverse.com/wp-content/themes/yokaverse/img/logo2.png" alt="游卡网络">
+      <div>
+        <div class="company-name">游卡网络 · 战略分析组</div>
+        <div class="company-slogan">创造和分享快乐</div>
+      </div>
+    </div>
+    <div class="nav-links">
+      <a href="https://www.yokaverse.com" target="_blank">官网首页</a>
+      <a href="https://www.yokaverse.com/about-us/" target="_blank">关于游卡</a>
+      <a href="https://www.yokaverse.com/business/" target="_blank">业务板块</a>
+      <a href="https://www.yokaverse.com/news-list/" target="_blank">新闻动态</a>
+    </div>
+  </div>
+  
+  <div class="hero-section">
+    <div class="hero-title">Steam 新游月度监控</div>
+    <div class="hero-title-en">Monthly Monitoring Report</div>
+    <div class="hero-desc">
+      基于数据驱动的市场洞察 · 把握行业机会与趋势<br>
+      为战略决策提供专业支持
+    </div>
+    <div class="year-badge">2026年度</div>
+  </div>
+</div>
+
+<!-- Main Content -->
+<div class="main-content">
+  
+  <div class="section-title">
+    <h2>月度报告</h2>
+    <div class="section-title-en">MONTHLY REPORTS</div>
+    <div class="section-divider"></div>
+  </div>
+
+  <div class="months-grid">
+    
+    <!-- 1月 -->
+    <div class="month-card active">
+      <div class="month-header">
+        <div class="month-number">01</div>
+        <div class="month-name">一月 / JANUARY</div>
+        <div class="month-status-badge">✓ 已发布</div>
+      </div>
+      <div class="month-body">
+        <div class="month-meta">2026年1月监控周期</div>
+        <div class="month-summary">
+          监控32款新游产品<br>
+          YAPYAP登顶销量榜<br>
+          中式梦核题材崛起<br>
+          凉屋多线布局分析
+        </div>
+        <div class="version-buttons">
+          <a href="Steam新游监控月报0220-电脑版.html" class="version-btn pc">
+            <span>🖥️</span>
+            <span>电脑版</span>
+          </a>
+          <a href="Steam新游监控月报0220-手机版.html" class="version-btn mobile">
+            <span>📱</span>
+            <span>手机版</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2-12月 -->
+    <div class="month-card inactive">
+      <div class="month-header">
+        <div class="month-number">02</div>
+        <div class="month-name">二月 / FEBRUARY</div>
+        <div class="month-status-badge pending">⏳ 敬请期待</div>
+      </div>
+      <div class="month-body">
+        <div class="month-meta">预计2026年3月初发布</div>
+        <div class="month-summary">2月新游市场动态监控中...</div>
+      </div>
+    </div>
+
+    <div class="month-card inactive">
+      <div class="month-header">
+        <div class="month-number">03</div>
+        <div class="month-name">三月 / MARCH</div>
+        <div class="month-status-badge pending">⏳ 敬请期待</div>
+      </div>
+      <div class="month-body">
+        <div class="month-meta">预计2026年4月初发布</div>
+        <div class="month-summary">3月新游市场动态监控中...</div>
+      </div>
+    </div>
+
+    <div class="month-card inactive">
+      <div class="month-header">
+        <div class="month-number">04</div>
+        <div class="month-name">四月 / APRIL</div>
+        <div class="month-status-badge pending">⏳ 敬请期待</div>
+      </div>
+      <div class="month-body">
+        <div class="month-meta">预计2026年5月初发布</div>
+        <div class="month-summary">4月新游市场动态监控中...</div>
+      </div>
+    </div>
+
+    <div class="month-card inactive">
+      <div class="month-header">
+        <div class="month-number">05</div>
+        <div class="month-name">五月 / MAY</div>
+        <div class="month-status-badge pending">⏳ 敬请期待</div>
+      </div>
+      <div class="month-body">
+        <div class="month-meta">预计2026年6月初发布</div>
+        <div class="month-summary">5月新游市场动态监控中...</div>
+      </div>
+    </div>
+
+    <div class="month-card inactive">
+      <div class="month-header">
+        <div class="month-number">06</div>
+        <div class="month-name">六月 / JUNE</div>
+        <div class="month-status-badge pending">⏳ 敬请期待</div>
+      </div>
+      <div class="month-body">
+        <div class="month-meta">预计2026年7月初发布</div>
+        <div class="month-summary">6月新游市场动态监控中...</div>
+      </div>
+    </div>
+
+    <div class="month-card inactive">
+      <div class="month-header">
+        <div class="month-number">07</div>
+        <div class="month-name">七月 / JULY</div>
+        <div class="month-status-badge pending">⏳ 敬请期待</div>
+      </div>
+      <div class="month-body">
+        <div class="month-meta">预计2026年8月初发布</div>
+        <div class="month-summary">7月新游市场动态监控中...</div>
+      </div>
+    </div>
+
+    <div class="month-card inactive">
+      <div class="month-header">
+        <div class="month-number">08</div>
+        <div class="month-name">八月 / AUGUST</div>
+        <div class="month-status-badge pending">⏳ 敬请期待</div>
+      </div>
+      <div class="month-body">
+        <div class="month-meta">预计2026年9月初发布</div>
+        <div class="month-summary">8月新游市场动态监控中...</div>
+      </div>
+    </div>
+
+    <div class="month-card inactive">
+      <div class="month-header">
+        <div class="month-number">09</div>
+        <div class="month-name">九月 / SEPTEMBER</div>
+        <div class="month-status-badge pending">⏳ 敬请期待</div>
+      </div>
+      <div class="month-body">
+        <div class="month-meta">预计2026年10月初发布</div>
+        <div class="month-summary">9月新游市场动态监控中...</div>
+      </div>
+    </div>
+
+    <div class="month-card inactive">
+      <div class="month-header">
+        <div class="month-number">10</div>
+        <div class="month-name">十月 / OCTOBER</div>
+        <div class="month-status-badge pending">⏳ 敬请期待</div>
+      </div>
+      <div class="month-body">
+        <div class="month-meta">预计2026年11月初发布</div>
+        <div class="month-summary">10月新游市场动态监控中...</div>
+      </div>
+    </div>
+
+    <div class="month-card inactive">
+      <div class="month-header">
+        <div class="month-number">11</div>
+        <div class="month-name">十一月 / NOVEMBER</div>
+        <div class="month-status-badge pending">⏳ 敬请期待</div>
+      </div>
+      <div class="month-body">
+        <div class="month-meta">预计2026年12月初发布</div>
+        <div class="month-summary">11月新游市场动态监控中...</div>
+      </div>
+    </div>
+
+    <div class="month-card inactive">
+      <div class="month-header">
+        <div class="month-number">12</div>
+        <div class="month-name">十二月 / DECEMBER</div>
+        <div class="month-status-badge pending">⏳ 敬请期待</div>
+      </div>
+      <div class="month-body">
+        <div class="month-meta">预计2027年1月初发布</div>
+        <div class="month-summary">12月新游市场动态监控中...</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Company Info -->
+  <div class="company-info">
+    <div class="mission-title">创造和分享快乐</div>
+    <div class="mission-desc">
+      游卡网络成立于2009年，是一家致力于创造和分享快乐的综合性游戏公司。<br>
+      旗下拥有桌面游戏、线上游戏、电子竞技、文化创意四大业务板块。<br>
+      战略分析组专注于市场洞察与数据分析，为公司决策提供专业支持。
+    </div>
+    <div class="business-tags">
+      <div class="business-tag">桌面游戏</div>
+      <div class="business-tag">线上游戏</div>
+      <div class="business-tag">电子竞技</div>
+      <div class="business-tag">文化创意</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Footer -->
+<div class="footer">
+  <div class="footer-logo">
+    <img src="https://www.yokaverse.com/wp-content/themes/yokaverse/img/logo2.png" alt="游卡网络">
+  </div>
+  <div class="footer-links">
+    <a href="https://www.yokaverse.com" target="_blank">官网首页</a>
+    <a href="https://www.yokaverse.com/about-us/" target="_blank">关于游卡</a>
+    <a href="https://www.yokaverse.com/business/" target="_blank">业务板块</a>
+    <a href="https://www.yokaverse.com/contact-us/" target="_blank">联系我们</a>
+  </div>
+  <div class="footer-info">
+    杭州游卡网络技术有限公司<br>
+    ©2016-2026 Hangzhou Yoka Network Technology Co., Ltd
+  </div>
+  <div class="footer-copyright">
+    本资料为内部参考资料，请勿外传 | 数据截至2026年2月
+  </div>
+</div>
+
+</body>
+</html>
