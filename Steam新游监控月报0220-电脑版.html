@@ -1,0 +1,1628 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026年1月Steam新游监控月报 · 游卡网络</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@1.4.0/dist/chartjs-plugin-annotation.min.js"></script>
+<style>
+:root {
+  --r: #ff5035; --rd: #c9280d; --r2: #ff8c42;
+  --rl: #fff4f2; --rm: #ffd5ce; --br: #e8eaf0;
+  --bg: #f0f1f7; --tx: #14152a; --tl: #5a5e80;
+  --grad: linear-gradient(135deg, #ff5035 0%, #ff8c42 100%);
+  --grad-deep: linear-gradient(140deg, #c9280d 0%, #ff5035 50%, #ff8c42 100%);
+  --shadow-r: 0 10px 40px rgba(255,80,53,.25);
+  --shadow: 0 2px 18px rgba(20,21,42,.07);
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  font-family: 'Microsoft YaHei','PingFang SC','Arial',sans-serif;
+  background: var(--bg); color: var(--tx); line-height: 1.75; font-size: 15px;
+  background-image: radial-gradient(circle at 1px 1px, rgba(90,94,128,.06) 1px, transparent 0);
+  background-size: 28px 28px;
+}
+.wrap { max-width: 1440px; margin: 0 auto; padding: 44px 36px; }
+
+/* ═══ HEADER ═══ */
+.header {
+  background: var(--grad-deep);
+  border-radius: 22px; margin-bottom: 36px;
+  box-shadow: var(--shadow-r); overflow: hidden; position: relative;
+}
+/* geometric accent shapes */
+.header::before {
+  content: ''; position: absolute; top: -120px; right: -100px;
+  width: 480px; height: 480px; border-radius: 50%;
+  background: rgba(255,255,255,.06);
+}
+.header::after {
+  content: ''; position: absolute; bottom: -80px; left: 140px;
+  width: 300px; height: 300px; border-radius: 50%;
+  background: rgba(255,255,255,.04);
+}
+.header-stripe {
+  position: absolute; top: 0; right: 0; bottom: 0; width: 360px;
+  background: rgba(255,255,255,.05);
+  clip-path: polygon(25% 0, 100% 0, 100% 100%, 0% 100%);
+}
+.header-stripe2 {
+  position: absolute; top: 0; right: 60px; bottom: 0; width: 180px;
+  background: rgba(255,255,255,.025);
+  clip-path: polygon(40% 0, 100% 0, 100% 100%, 0% 100%);
+}
+.header-body { padding: 52px 58px 44px; position: relative; z-index: 2; color: #fff; }
+.header-eyebrow {
+  display: inline-flex; align-items: center; gap: 10px;
+  background: rgba(255,255,255,.15); border: 1px solid rgba(255,255,255,.3);
+  border-radius: 40px; padding: 6px 20px; font-size: 13px; letter-spacing: 2.5px;
+  margin-bottom: 22px; backdrop-filter: blur(6px);
+}
+.header-eyebrow .pulse {
+  width: 7px; height: 7px; border-radius: 50%; background: #fff;
+  box-shadow: 0 0 0 0 rgba(255,255,255,.6);
+  animation: pulse 2s infinite;
+}
+/* ── 游卡原子轨迹 Logo ── */
+.yoka-orbit-logo {
+  position: absolute; top: 28px; right: 58px;
+  display: flex; align-items: center;
+  background: rgba(255,255,255,.1);
+  backdrop-filter: blur(8px);
+  padding: 10px 20px;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,.2);
+  box-shadow: 0 4px 20px rgba(0,0,0,.15);
+}
+@keyframes logoGlow {
+  0%, 100% { box-shadow: 0 4px 20px rgba(255,140,66,.35), inset 0 0 0 1px rgba(255,255,255,.15); }
+  50% { box-shadow: 0 6px 28px rgba(255,140,66,.55), inset 0 0 0 1px rgba(255,255,255,.25); }
+}
+
+/* ── AI Enhanced 徽章 ── */
+.ai-badge {
+  display: inline-block; margin-left: 16px;
+  background: linear-gradient(135deg, rgba(124,58,237,.95), rgba(139,92,246,.85));
+  color: #fff; font-size: 13px; font-weight: 600;
+  padding: 4px 14px; border-radius: 20px;
+  letter-spacing: 1px; text-transform: uppercase;
+  box-shadow: 0 0 20px rgba(124,58,237,.5),
+              inset 0 1px 0 rgba(255,255,255,.3);
+  font-family: 'Arial','Microsoft YaHei',sans-serif;
+  position: relative; overflow: hidden;
+}
+.ai-badge::before {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.25), transparent);
+  transform: translateX(-100%);
+  animation: shimmer 2.5s infinite;
+}
+@keyframes shimmer {
+  to { transform: translateX(100%); }
+}
+
+@keyframes pulse {
+  0%   { box-shadow: 0 0 0 0 rgba(255,255,255,.6); }
+  70%  { box-shadow: 0 0 0 7px rgba(255,255,255,0); }
+  100% { box-shadow: 0 0 0 0 rgba(255,255,255,0); }
+}
+.header h1 {
+  font-family: 'Noto Serif SC', 'Microsoft YaHei', serif;
+  font-size: 46px; font-weight: 700; letter-spacing: 1px; margin-bottom: 8px;
+  text-shadow: 0 3px 16px rgba(0,0,0,.2);
+}
+.header-rule {
+  width: 64px; height: 3px; margin: 20px 0 26px;
+  background: rgba(255,255,255,.55); border-radius: 2px;
+}
+.meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 50px; }
+.meta-row { display: flex; align-items: baseline; gap: 10px; font-size: 14px; line-height: 1.5; }
+.meta-row .ml { opacity: .78; }
+.meta-row .mv {
+  font-weight: 700; font-size: 16px;
+  background: rgba(255,255,255,.22); border: 1px solid rgba(255,255,255,.3);
+  padding: 1px 12px; border-radius: 30px; margin: 0 2px;
+}
+.meta-date-row {
+  grid-column: 1/-1; display: flex; align-items: center; gap: 10px;
+  margin-top: 6px; font-size: 12px; opacity: .6;
+}
+.meta-date-row::before { content:''; width:16px; height:1px; background:#fff; }
+
+/* header bottom bar */
+.header-bar {
+  position: relative; z-index: 2;
+  background: rgba(0,0,0,.15); border-top: 1px solid rgba(255,255,255,.1);
+  padding: 13px 58px;
+  display: flex; justify-content: space-between; align-items: center;
+  color: rgba(255,255,255,.75); font-size: 12.5px; letter-spacing: .3px;
+}
+.hb-item { display: flex; align-items: center; gap: 8px; }
+.hb-pip { width: 5px; height: 5px; border-radius: 50%; background: rgba(255,140,66,.9); }
+.hb-divider { width: 1px; height: 14px; background: rgba(255,255,255,.2); }
+
+/* ═══ METRICS ═══ */
+.metrics { display: grid; grid-template-columns: repeat(5,1fr); gap: 18px; margin-bottom: 36px; }
+.mc {
+  background: #fff; padding: 26px 22px 22px; border-radius: 16px;
+  box-shadow: 0 2px 16px rgba(20,21,42,.07); position: relative; overflow: hidden;
+  transition: transform .25s cubic-bezier(.25,.46,.45,.94), box-shadow .25s;
+  border: 1px solid rgba(232,234,240,.9);
+}
+.mc:hover { transform: translateY(-4px); box-shadow: var(--shadow-r); }
+/* AI 数据点阵 */
+.mc .ml::before {
+  content: '⬢'; color: rgba(124,58,237,.3); margin-right: 6px;
+  font-size: 9px; vertical-align: middle;
+}
+.mc::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  background: var(--grad);
+}
+.mc::after {
+  content: attr(data-icon); position: absolute; right: 14px; bottom: 14px;
+  font-size: 32px; opacity: .12; pointer-events: none;
+}
+.mc::after {
+  content: attr(data-icon); position: absolute; right: 14px; bottom: 10px;
+  font-size: 42px; opacity: .055; line-height: 1;
+}
+.mc:hover { transform: translateY(-5px); box-shadow: 0 12px 36px rgba(255,80,53,.18); }
+.mc .ml { color: var(--tl); font-size: 11.5px; text-transform: uppercase; letter-spacing: 1.2px; margin-bottom: 11px; }
+.mc .mv {
+  font-size: 26px; font-weight: 700; margin-bottom: 7px; line-height: 1.1;
+  background: var(--grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.mc .ms { color: #aaa; font-size: 12.5px; }
+
+/* ═══ SECTION ═══ */
+.section {
+  background: #fff; padding: 44px 50px; border-radius: 20px;
+  margin-bottom: 28px; box-shadow: 0 2px 24px rgba(20,21,42,.06);
+  border: 1px solid rgba(232,234,240,.8);
+  position: relative; overflow: hidden;
+}
+.section::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  background: linear-gradient(90deg, var(--r) 0%, var(--r2) 60%, transparent 100%);
+  opacity: .45; pointer-events: none;
+}
+/* AI 数据流装饰线 */
+.section::after {
+  content: ''; position: absolute; right: 0; top: 60px; bottom: 60px; width: 2px;
+  background: linear-gradient(180deg, transparent, rgba(124,58,237,.15), rgba(124,58,237,.25), rgba(124,58,237,.15), transparent);
+  opacity: .6; pointer-events: none;
+  animation: dataFlow 3s linear infinite;
+}
+@keyframes dataFlow {
+  0% { background-position: 0 0; }
+  100% { background-position: 0 100px; }
+}
+.sec-title {
+  display: flex; align-items: center; gap: 16px;
+  margin-bottom: 30px; padding-bottom: 18px;
+  border-bottom: 1.5px solid var(--br);
+}
+.sec-num {
+  width: 42px; height: 42px; border-radius: 12px; flex-shrink: 0;
+  background: var(--grad); color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 17px; font-weight: 700;
+  box-shadow: 0 6px 20px rgba(255,80,53,.38);
+  font-family: 'Noto Serif SC',serif;
+}
+.sec-title h2 {
+  font-family: 'Noto Serif SC','Microsoft YaHei',serif;
+  font-size: 22px; font-weight: 700; color: var(--tx); letter-spacing: .3px;
+}
+.sec-title-rule { flex: 1; height: 1px; background: linear-gradient(90deg, var(--br), transparent); }
+
+/* ═══ CHARTS ═══ */
+.chart2 { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; margin-bottom: 22px; }
+.cbox {
+  background: var(--bg); border-radius: 14px; padding: 26px;
+  border: 1px solid var(--br);
+  position: relative;
+}
+/* AI 科技角标 */
+.cbox::before {
+  content: ''; position: absolute; top: 0; left: 0;
+  width: 32px; height: 32px;
+  border-top: 2px solid rgba(124,58,237,.25);
+  border-left: 2px solid rgba(124,58,237,.25);
+  border-radius: 14px 0 0 0;
+}
+.cbox::after {
+  content: ''; position: absolute; bottom: 0; right: 0;
+  width: 32px; height: 32px;
+  border-bottom: 2px solid rgba(124,58,237,.2);
+  border-right: 2px solid rgba(124,58,237,.2);
+  border-radius: 0 0 14px 0;
+}
+.cbox-title {
+  font-size: 13.5px; font-weight: 600; color: var(--tl);
+  text-transform: uppercase; letter-spacing: 1px;
+  text-align: center; margin-bottom: 18px;
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+}
+.cbox-title::before, .cbox-title::after {
+  content: ''; flex: 1; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--br));
+}
+.cbox-title::after { background: linear-gradient(270deg, transparent, var(--br)); }
+
+/* ═══ GAME CARDS ═══ */
+.games { display: grid; gap: 18px; }
+.gc {
+  border: 1.5px solid var(--br); border-radius: 16px; overflow: hidden;
+  transition: border-color .2s, box-shadow .2s;
+}
+.gc:hover { border-color: var(--rm); box-shadow: 0 8px 32px rgba(255,80,53,.12); }
+.gc-top {
+  display: grid; grid-template-columns: 70px 1fr 130px 130px 160px;
+  gap: 20px; padding: 20px 28px; align-items: center; background: #fff;
+}
+.gc-top.rel { border-left: 5px solid; border-image: var(--grad) 1; }
+.gc-top.unrel { border-left: 5px solid #f0a080; }
+.rank {
+  width: 52px; height: 52px; border-radius: 13px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 23px; font-weight: 700; color: #fff;
+  box-shadow: 0 5px 16px rgba(255,80,53,.38);
+}
+.rank.r1 { background: var(--grad); }
+.rank.r2 { background: linear-gradient(135deg,#ff6e3a,#d93a18); }
+.rank.r3 { background: linear-gradient(135deg,#ff9060,#e05530); }
+.rank.soft { background: linear-gradient(135deg,#f0a080,#d07050); box-shadow: 0 4px 14px rgba(200,100,60,.3); }
+.gm h3 { font-size: 17px; font-weight: 700; margin-bottom: 8px; color: var(--tx); }
+.tags { display: flex; gap: 6px; flex-wrap: wrap; }
+.tag {
+  background: var(--rl); color: var(--r);
+  font-size: 11px; padding: 3px 11px; border-radius: 20px;
+  font-weight: 600; border: 1px solid var(--rm);
+}
+.tag.n { background: #f2f3f8; color: #666; border-color: var(--br); }
+.sc { text-align: center; }
+.sc .sv {
+  font-size: 22px; font-weight: 700;
+  background: var(--grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.sc .sl { font-size: 11px; color: #bbb; text-transform: uppercase; margin-top: 3px; letter-spacing: .5px; }
+.sc .sg { font-size: 12px; color: #16a34a; font-weight: 600; margin-top: 3px; }
+.vbtn {
+  display: inline-flex; align-items: center; gap: 7px;
+  background: var(--grad); color: #fff; padding: 9px 20px; border-radius: 10px;
+  font-size: 13px; font-weight: 600; text-decoration: none;
+  box-shadow: 0 5px 16px rgba(255,80,53,.32);
+  transition: transform .2s, box-shadow .2s; white-space: nowrap;
+}
+.vbtn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(255,80,53,.45); }
+
+/* DETAIL */
+.gc-detail { background: var(--bg); padding: 24px 32px; border-top: 1px solid var(--br); }
+.dg { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+.db h4 {
+  font-size: 11.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.3px;
+  margin-bottom: 10px; display: flex; align-items: center; gap: 7px;
+  background: var(--grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.db h4::before {
+  content: ''; display: inline-block; width: 3px; height: 13px;
+  background: var(--grad); border-radius: 2px; flex-shrink: 0;
+}
+.db p { font-size: 14px; color: #4a4e70; line-height: 1.82; margin: 5px 0; }
+.db ul { margin-left: 18px; }
+.db li { font-size: 14px; color: #4a4e70; line-height: 1.82; margin-bottom: 6px; }
+
+/* INSIGHT */
+.ins-h3 {
+  font-family: 'Noto Serif SC','Microsoft YaHei',serif;
+  font-size: 20px; font-weight: 700; color: var(--tx);
+  margin: 34px 0 16px; padding: 14px 20px; border-radius: 12px;
+  background: linear-gradient(135deg, rgba(255,80,53,.07) 0%, rgba(255,140,66,.04) 100%);
+  border-left: 4px solid var(--r);
+}
+.ibox {
+  background: var(--bg); padding: 20px 26px; border-radius: 13px;
+  margin: 14px 0; border: 1px solid var(--br); border-left: 4px solid var(--r);
+}
+.ibox h4 {
+  font-size: 14px; font-weight: 700; color: var(--tx);
+  margin-bottom: 11px; display: flex; align-items: center; gap: 9px;
+}
+.ibox h4 .dot {
+  width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0;
+  background: var(--grad); box-shadow: 0 2px 8px rgba(255,80,53,.45);
+}
+.ibox p { font-size: 14.5px; color: #4a4e70; line-height: 1.88; margin: 7px 0; }
+
+/* HIGHLIGHTS */
+.hr { color: var(--r); font-weight: 700; }
+.hn {
+  font-weight: 700; font-size: 1.06em;
+  background: var(--grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.hb { background: linear-gradient(180deg,transparent 54%,rgba(255,140,66,.28) 54%); padding: 1px 3px; font-weight: 600; }
+
+/* TABLE */
+.tw { overflow-x: auto; margin: 18px 0; border-radius: 14px; box-shadow: var(--shadow); }
+.ct { width: 100%; border-collapse: collapse; font-size: 14.5px; }
+.ct th {
+  background: var(--grad); color: #fff;
+  padding: 14px 18px; text-align: left; font-weight: 600; font-size: 13.5px; letter-spacing: .5px;
+}
+.ct td { padding: 13px 18px; border-bottom: 1px solid #f0f1f8; background: #fff; }
+.ct tr:last-child td { border-bottom: none; }
+.ct tr:hover td { background: var(--rl); }
+.ct .num { font-weight: 700; background: var(--grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+
+/* ═══ FOOTER ═══ */
+.footer {
+  margin-top: 10px; border-radius: 20px; overflow: hidden;
+  background: linear-gradient(140deg, #14152a 0%, #1f2244 100%);
+  box-shadow: 0 8px 40px rgba(20,21,42,.3);
+}
+.footer-main {
+  padding: 40px 58px;
+  display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 30px;
+}
+.footer-brand {}
+.footer-brand .fb-title {
+  font-family: 'Noto Serif SC','Microsoft YaHei',serif;
+  font-size: 22px; font-weight: 700; color: #fff; letter-spacing: 1px;
+  margin-bottom: 6px;
+}
+.footer-brand .fb-sub {
+  font-size: 12px; letter-spacing: 3px; text-transform: uppercase;
+  color: rgba(255,255,255,.35);
+}
+.footer-brand .fb-tags { display: flex; gap: 8px; margin-top: 14px; }
+.footer-brand .fb-tag {
+  background: rgba(255,80,53,.2); border: 1px solid rgba(255,80,53,.3);
+  color: rgba(255,140,66,.9); font-size: 11px; padding: 3px 12px; border-radius: 20px;
+}
+.footer-center { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+.footer-emblem {
+  width: 56px; height: 56px; border-radius: 50%;
+  background: var(--grad); display: flex; align-items: center; justify-content: center;
+  font-size: 22px; box-shadow: 0 6px 24px rgba(255,80,53,.45);
+}
+.footer-vert { width: 1px; height: 30px; background: rgba(255,255,255,.15); }
+.footer-right { text-align: right; color: rgba(255,255,255,.45); font-size: 13px; line-height: 2; }
+.footer-right .fr-label {
+  display: inline-block; background: rgba(255,255,255,.08);
+  padding: 2px 12px; border-radius: 20px; font-size: 11px;
+  color: rgba(255,255,255,.5); margin-bottom: 8px;
+}
+.footer-bottom {
+  background: rgba(0,0,0,.2); border-top: 1px solid rgba(255,255,255,.06);
+  padding: 14px 58px;
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: 12px; color: rgba(255,255,255,.3);
+}
+.footer-sources { display: flex; gap: 20px; }
+.footer-sources span { display: flex; align-items: center; gap: 6px; }
+.footer-sources span::before { content:''; width:4px; height:4px; border-radius:50%; background:rgba(255,140,66,.6); }
+.footer-copy { letter-spacing: .5px; }
+
+/* ── GAME BANNER ── */
+.game-banner {
+  display: grid; grid-template-columns: 1.5fr 1fr 1fr; gap: 14px;
+  margin-bottom: 36px; align-items: stretch;
+}
+.banner-card {
+  border-radius: 18px; overflow: hidden; position: relative;
+  box-shadow: 0 8px 32px rgba(0,0,0,.18); cursor: pointer;
+  transition: transform .3s cubic-bezier(.25,.46,.45,.94), box-shadow .3s;
+  min-height: 260px; background: #1a1a2e;
+}
+.banner-card:first-child { min-height: 260px; }
+.banner-card:hover { transform: translateY(-6px) scale(1.01); box-shadow: 0 22px 56px rgba(0,0,0,.32); }
+.banner-card img {
+  width: 100%; height: 100%; object-fit: cover; object-position: center top; display: block;
+  transition: transform .5s cubic-bezier(.25,.46,.45,.94); filter: brightness(.85) saturate(1.1);
+}
+.banner-card:hover img { transform: scale(1.08); filter: brightness(1) saturate(1.2); }
+/* cinematic vignette top */
+.banner-card::before {
+  content: ''; position: absolute; inset: 0; z-index: 1;
+  background: linear-gradient(180deg,
+    rgba(0,0,0,.35) 0%,
+    transparent 35%,
+    transparent 55%,
+    rgba(0,0,0,.82) 100%);
+  pointer-events: none;
+}
+.banner-overlay {
+  position: absolute; bottom: 0; left: 0; right: 0; z-index: 2;
+  padding: 22px 20px 18px;
+}
+.banner-meta { display: flex; justify-content: space-between; align-items: flex-end; }
+.banner-info {}
+.banner-name {
+  color: #fff; font-size: 18px; font-weight: 800;
+  text-shadow: 0 2px 12px rgba(0,0,0,.7);
+  font-family: 'Noto Serif SC','Microsoft YaHei',serif;
+  display: block; margin-bottom: 5px;
+}
+.banner-card:not(:first-child) .banner-name { font-size: 15px; }
+.banner-sub {
+  color: rgba(255,255,255,.65); font-size: 12px;
+  display: flex; gap: 8px; align-items: center;
+}
+.banner-sub span { display: flex; align-items: center; gap: 4px; }
+.banner-sub span::before { content:'·'; color: rgba(255,140,66,.8); }
+.banner-sub span:first-child::before { display: none; }
+.banner-stat {
+  text-align: right; min-width: 70px;
+}
+.banner-stat-num {
+  font-size: 20px; font-weight: 800; color: #fff;
+  text-shadow: 0 0 20px rgba(255,140,66,.8);
+  font-family: 'Noto Serif SC',serif;
+  line-height: 1;
+}
+.banner-card:not(:first-child) .banner-stat-num { font-size: 16px; }
+.banner-stat-label { font-size: 10px; color: rgba(255,255,255,.5); margin-top: 3px; letter-spacing: .5px; }
+.banner-tag {
+  position: absolute; top: 14px; right: 14px; z-index: 2;
+  background: var(--grad); color: #fff;
+  font-size: 10px; padding: 4px 12px; border-radius: 20px; font-weight: 700;
+  white-space: nowrap; letter-spacing: .5px;
+  box-shadow: 0 3px 12px rgba(255,80,53,.5);
+}
+.banner-err { display:none; }
+.banner-fallback {
+  width:100%; height:100%; display:flex; flex-direction:column;
+  align-items:center; justify-content:center; gap:12px;
+  background: linear-gradient(135deg,#1a1a2e,#2d1f3d);
+  color:rgba(255,255,255,.7); font-size:13px; text-align:center; padding:20px;
+}
+.banner-fallback .bf-icon { font-size:44px; }
+.banner-fallback .bf-name { font-size:17px; font-weight:700; color:#fff; }
+
+/* ── TOP5 COMBO CHART ── */
+.combo-chart-section {
+  background:#fff; padding:44px 50px; border-radius:20px;
+  margin-bottom:28px; box-shadow:var(--shadow);
+}
+.combo-chart-grid { display:grid; grid-template-columns:1fr 1fr; gap:22px; }
+.combo-chart-full { grid-column:1/-1; }
+.chart-note {
+  margin-top:14px; padding:12px 16px;
+  background:linear-gradient(135deg,rgba(255,80,53,.05) 0%,rgba(255,140,66,.02) 100%);
+  border-left:3px solid transparent;
+  border-image: linear-gradient(180deg, var(--r), var(--r2)) 1;
+  border-radius:0 10px 10px 0;
+  font-size:13px; color:var(--tl); line-height:1.8;
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<!-- ═══ HEADER ═══ -->
+<div class="header">
+  <div class="header-stripe"></div>
+  <div class="header-stripe2"></div>
+  <div class="header-body">
+    <!-- 游卡网络官方 Logo -->
+    <div class="yoka-orbit-logo">
+      <img src="https://www.yokaverse.com/wp-content/themes/yokaverse/img/logo2.png"
+           alt="游卡网络 Yokaverse"
+           style="height:44px; width:auto; display:block; filter:brightness(0) invert(1);"
+           onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+      <!-- fallback：官网图加载失败时显示文字 -->
+      <div style="display:none; flex-direction:column; align-items:flex-end; gap:2px;">
+        <span style="font-size:16px; font-weight:800; letter-spacing:2px; color:#fff;">YOKAVERSE</span>
+        <span style="font-size:11px; color:rgba(255,255,255,.7); letter-spacing:1px;">游卡网络</span>
+      </div>
+    </div>
+    
+    <div class="header-eyebrow">
+      <div class="pulse"></div>
+      游卡网络 Yokaverse · 战略分析组 · 月度监控报告
+    </div>
+    <h1>2026年1月 Steam 新游监控月报<span class="ai-badge">AI Enhanced</span></h1>
+    <div class="header-rule"></div>
+    <div class="meta-grid">
+      <div class="meta-row">
+        <span class="ml">已发售重点产品</span><span class="mv">18款</span>
+        <span class="ml">YAPYAP(45.7万) · My Winter Car(38.7万) · 孤山独影(31.6万)</span>
+      </div>
+      <div class="meta-row">
+        <span class="ml">未发售重点产品</span><span class="mv">14款</span>
+        <span class="ml">蝼蚁之城(9万愿望单) · 虚空潜者(6.8万) · 财迷心窍(5万)</span>
+      </div>
+      <div class="meta-row">
+        <span class="ml">监控平台</span>
+        <span class="ml">Steam · B站 · 小黑盒 · TikTok · Youtube · Reddit</span>
+      </div>
+      <div class="meta-date-row">数据截至 2026年2月13日</div>
+    </div>
+  </div>
+  <div class="header-bar">
+    <div class="hb-item"><div class="hb-pip"></div>月度新游监控报告</div>
+    <div class="hb-divider"></div>
+    <div class="hb-item"><div class="hb-pip"></div>监控产品 32 款</div>
+    <div class="hb-divider"></div>
+    <div class="hb-item"><div class="hb-pip"></div>6大数据平台聚合</div>
+    <div class="hb-divider"></div>
+    <div class="hb-item"><div class="hb-pip"></div>已发售 18 款 · 待发售 14 款</div>
+    <div class="hb-divider"></div>
+    <div class="hb-item"><div class="hb-pip"></div>内部参考 · 请勿外传</div>
+  </div>
+</div>
+
+<!-- ═══ 关键洞察总结 ═══ -->
+<div style="background:#fff; border-radius:18px; padding:36px 40px; margin-bottom:28px; box-shadow:var(--shadow); border-top:5px solid var(--r);">
+  <div style="font-size:13px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:var(--tl); margin-bottom:22px;">📌 本月关键洞察</div>
+  <div style="display:flex; flex-direction:column; gap:20px;">
+
+    <!-- 洞察1：YAPYAP语音派对 -->
+    <div style="display:flex; gap:20px; align-items:flex-start; padding:22px; background:#fff8f7; border-radius:12px; border-left:5px solid var(--r);">
+      <div style="flex-shrink:0; width:36px; height:36px; background:var(--grad); border-radius:50%; display:flex; align-items:center; justify-content:center; color:#fff; font-weight:800; font-size:16px;">1</div>
+      <div>
+        <div style="font-size:17px; font-weight:700; color:var(--tx); margin-bottom:8px;">YAPYAP海外爆火：语音出牌是下一个社交赛道突破口</div>
+        <div style="font-size:15px; color:var(--tl); line-height:1.8;">
+          YAPYAP凭借<strong style="color:var(--r);">语音施法</strong>创新机制登顶本月Steam销量榜，45.7万份销量中<strong style="color:var(--r);">海外占比高达89.4%</strong>，近7日仍保持+70.2%高增速。其核心价值在于：语音输入将玩家的紧张情绪转化为游戏机制，天然具备直播传播性。对游卡而言，<strong style="color:var(--r);">《三国杀》武将技能与语音施法天然契合</strong>——可设想"喊武将技能名触发出牌"的玩法模式，在现有手游中低成本验证，以极小投入撬动社交传播红利。
+        </div>
+      </div>
+    </div>
+
+    <!-- 洞察2：中式梦核 -->
+    <div style="display:flex; gap:20px; align-items:flex-start; padding:22px; background:#f8f9ff; border-radius:12px; border-left:5px solid #1976d2;">
+      <div style="flex-shrink:0; width:36px; height:36px; background:linear-gradient(135deg,#1976d2,#42a5f5); border-radius:50%; display:flex; align-items:center; justify-content:center; color:#fff; font-weight:800; font-size:16px;">2</div>
+      <div>
+        <div style="font-size:17px; font-weight:700; color:var(--tx); margin-bottom:8px;">中式梦核题材连出小爆款：文化共情成独立赛道新红利</div>
+        <div style="font-size:15px; color:var(--tl); line-height:1.8;">
+          本月围绕"千禧童年"同一题材，<strong style="color:#1976d2;">连续出现千禧梦（12万份·国区85.5%）、千禧梦游指南、千禧失乐园</strong>三款产品，且均获得正向市场反馈，形成罕见的题材簇生现象。红格地砖、绿皮火车、诺基亚铃声等中式符号精准击中95后/00后情感痛点，证明<strong style="color:#1976d2;">本土文化题材在独立游戏领域具备可持续的商业价值</strong>。中式文化题材正在成为独立游戏以小博大、突破流量封锁的核心打法。
+        </div>
+      </div>
+    </div>
+
+    <!-- 洞察3：凉屋矩阵 -->
+    <div style="display:flex; gap:20px; align-items:flex-start; padding:22px; background:#f8fff9; border-radius:12px; border-left:5px solid #388e3c;">
+      <div style="flex-shrink:0; width:36px; height:36px; background:linear-gradient(135deg,#388e3c,#66bb6a); border-radius:50%; display:flex; align-items:center; justify-content:center; color:#fff; font-weight:800; font-size:16px;">3</div>
+      <div>
+        <div style="font-size:17px; font-weight:700; color:var(--tx); margin-bottom:8px;">凉屋密集推新：从肉鸽大厂转型为多赛道独游孵化器</div>
+        <div style="font-size:15px; color:var(--tl); line-height:1.8;">
+          深圳凉屋（ChillyRoom）本月同步推进<strong style="color:#388e3c;">查无此地（撤离射击）、绝地鸭卫（动作硬核）、蝼蚁之城（赛博ARPG）</strong>三款风格迥异的新品，横跨三个截然不同赛道。这一"制作人负责制+小团队多线并行"的孵化模式，正在将凉屋从单一品类优势转化为<strong style="color:#388e3c;">多赛道规模化押注能力</strong>。其中蝼蚁之城愿望单突破9万、近7日增速+28.9%，是本月最值得持续跟踪的未发售重点产品。
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══ METRICS ═══ -->
+<div class="metrics">
+  <div class="mc" data-icon="🏆"><div class="ml">销量最高</div><div class="mv">YAPYAP</div><div class="ms">45.7万份 · 派对游戏</div></div>
+  <div class="mc" data-icon="🇨🇳"><div class="ml">国区占比最高</div><div class="mv">千禧梦</div><div class="ms">85.5% · 步行模拟</div></div>
+  <div class="mc" data-icon="⭐"><div class="ml">愿望单最高(未发售)</div><div class="mv">蝼蚁之城</div><div class="ms">9万 · ARPG</div></div>
+  <div class="mc" data-icon="🚀"><div class="ml">近7日销量增长最快</div><div class="mv">YAPYAP</div><div class="ms">+32.1万份 · +70.2%</div></div>
+  <div class="mc" data-icon="📈"><div class="ml">近7日愿望单增长最快</div><div class="mv">蝼蚁之城</div><div class="ms">+2.6万 · +28.9%</div></div>
+</div>
+
+<!-- ═══ 核心发现 STRATEGIC INSIGHTS ═══ -->
+<div style="display:grid; grid-template-columns:1fr 1fr; gap:18px; margin-bottom:36px;">
+  <div style="background:#fff; border-radius:16px; padding:32px; border-left:6px solid var(--r); box-shadow:var(--shadow);">
+    <div style="font-size:48px; font-weight:800; color:var(--r); margin-bottom:12px; font-family:'Noto Serif SC',serif;">86%</div>
+    <div style="font-size:15px; font-weight:700; color:var(--tx); margin-bottom:12px;">市场集中度异常</div>
+    <div style="font-size:14px; color:var(--tl); line-height:1.7;">
+      YAPYAP一款产品贡献本月新增销量的86%，<span style="background:linear-gradient(transparent 60%, #fff59d 60%); padding:0 4px;">社交派对游戏形成降维打击</span>
+    </div>
+  </div>
+  <div style="background:#fff; border-radius:16px; padding:32px; border-left:6px solid var(--r); box-shadow:var(--shadow);">
+    <div style="font-size:48px; font-weight:800; color:var(--r); margin-bottom:12px; font-family:'Noto Serif SC',serif;">85.5%</div>
+    <div style="font-size:15px; font-weight:700; color:var(--tx); margin-bottom:12px;">中式文化本土优势</div>
+    <div style="font-size:14px; color:var(--tl); line-height:1.7;">
+      千禧梦国区占比85.5%，<span style="background:linear-gradient(transparent 60%, #fff59d 60%); padding:0 4px;">中式梦核美学展现强文化护城河</span>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ GAME BANNER ═══ -->
+<div class="game-banner">
+
+  <!-- YAPYAP: 主卡（大） -->
+  <div class="banner-card">
+    <img
+      src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/3834090/c3d352e8c87c3e4132a77614ab6b1f897f0c5e48/page_bg_raw.jpg?t=1763486186"
+      onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
+      alt="YAPYAP角色场景">
+    <div class="banner-fallback" style="display:none;">
+      <div class="bf-icon">🧙</div><div class="bf-name">YAPYAP</div>
+      <div>语音施法多人派对</div>
+    </div>
+    <div class="banner-tag">🏆 销量 No.1</div>
+    <div class="banner-overlay">
+      <div class="banner-meta">
+        <div class="banner-info">
+          <span class="banner-name">YAPYAP</span>
+          <div class="banner-sub">
+            <span>语音施法</span><span>多人合作</span><span>Maison Bap</span>
+          </div>
+        </div>
+        <div class="banner-stat">
+          <div class="banner-stat-num">45.7万</div>
+          <div class="banner-stat-label">总销量</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 千禧梦：右上 -->
+  <div class="banner-card">
+    <img
+      src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/3470560/b48c44c2079ba247c67e979f8ada6d75aa0c39aa/ss_b48c44c2079ba247c67e979f8ada6d75aa0c39aa.1920x1080.jpg?t=1770169413"
+      onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
+      alt="千禧梦场景人物">
+    <div class="banner-fallback" style="display:none;">
+      <div class="bf-icon">🌳</div><div class="bf-name">千禧梦</div>
+      <div>中式梦核步行模拟</div>
+    </div>
+    <div class="banner-tag">🇨🇳 国区冠军</div>
+    <div class="banner-overlay">
+      <div class="banner-meta">
+        <div class="banner-info">
+          <span class="banner-name">千禧梦</span>
+          <div class="banner-sub"><span>中式梦核</span><span>步行模拟</span></div>
+        </div>
+        <div class="banner-stat">
+          <div class="banner-stat-num">85.5%</div>
+          <div class="banner-stat-label">国区占比</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 蝼蚁之城：右下 -->
+  <div class="banner-card">
+    <img
+      src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/3489340/18ed58e72cec886a133ae59ac4ad890600087a46/page_bg_raw.jpg?t=1769483118"
+      onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
+      alt="蝼蚁之城角色场景">
+    <div class="banner-fallback" style="display:none;">
+      <div class="bf-icon">🤖</div><div class="bf-name">蝼蚁之城</div>
+      <div>赛博神话动作RPG</div>
+    </div>
+    <div class="banner-tag">⭐ 愿望单 No.1</div>
+    <div class="banner-overlay">
+      <div class="banner-meta">
+        <div class="banner-info">
+          <span class="banner-name">蝼蚁之城</span>
+          <div class="banner-sub"><span>赛博神话</span><span>动作RPG</span></div>
+        </div>
+        <div class="banner-stat">
+          <div class="banner-stat-num">9万</div>
+          <div class="banner-stat-label">愿望单数</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ═══ SECTION 1: CHARTS ═══ -->
+<div class="section">
+  <div class="sec-title">
+    <div class="sec-num">一</div>
+    <h2>数据概览与市场分析</h2>
+    <div class="sec-title-rule"></div>
+  </div>
+
+  <!-- 子标题1 -->
+  <div style="font-size:13px;color:var(--tl);font-weight:600;letter-spacing:1px;text-transform:uppercase;margin-bottom:14px;padding-left:2px;">
+    1.1 &nbsp; 产品结构分布
+  </div>
+  <div class="chart2" style="margin-bottom:6px;">
+    <div class="cbox">
+      <div class="cbox-title">发售状态分布</div>
+      <canvas id="c1"></canvas>
+      <div class="chart-note">共监控 <b>32款</b> 产品：已发售 <b style="color:var(--r)">18款</b>，待发售 <b style="color:#f0a080">14款</b>。已发售产品中销量差距显著，Top3合计贡献超 <b>80%</b> 总销量。</div>
+    </div>
+    <div class="cbox">
+      <div class="cbox-title">发行方式占比</div>
+      <canvas id="c2"></canvas>
+      <div class="chart-note"><b style="color:var(--r)">72%</b> 产品选择自研自发，说明独立团队主导市场；签约发行产品（28%）集中在资源较强的中国工作室（凉屋、玄镜等）。</div>
+    </div>
+  </div>
+
+  <!-- 子标题2 -->
+  <div style="font-size:13px;color:var(--tl);font-weight:600;letter-spacing:1px;text-transform:uppercase;margin:22px 0 14px;padding-left:2px;">
+    1.2 &nbsp; 销量与国区分布
+  </div>
+  <div class="chart2" style="margin-bottom:6px;">
+    <div class="cbox">
+      <div class="cbox-title">Top 10 销量产品（万份）</div>
+      <canvas id="c3"></canvas>
+      <div class="chart-note">前5名销量均超 <b style="color:var(--r)">10万份</b>，YAPYAP（45.7万）领先第二名 <b>+18%</b>；第6名起销量断崖，头部集中效应明显。</div>
+    </div>
+    <div class="cbox">
+      <div class="cbox-title">国区销量占比分布</div>
+      <canvas id="c4"></canvas>
+      <div class="chart-note">千禧梦（<b style="color:var(--r)">85.5%</b>）、血薪记（81.1%）高度依赖国区；YAPYAP国区仅 <b>10.6%</b>，说明语音类社交游戏国内渗透仍有大量空间。</div>
+    </div>
+  </div>
+
+  <!-- 子标题3: TOP5 画像 -->
+
+  <!-- 1.3 多维交叉分析 -->
+  <div style="font-size:13px;color:var(--tl);font-weight:600;letter-spacing:1px;text-transform:uppercase;margin:32px 0 14px;padding-left:2px;">
+    1.3 &nbsp; 销量 × 增速 × 国区占比 多维分析
+  </div>
+  <!-- 气泡图：全宽独立 -->
+  <div class="cbox" style="margin-bottom:22px;">
+    <div class="cbox-title">已发售产品全景气泡图（气泡大小 = 国区占比）</div>
+    <canvas id="bubbleChart" height="60"></canvas>
+    <div class="chart-note">
+      横轴：总销量 | 纵轴：近7日销量增速 | 气泡大小：国区占比。
+      <b style="color:var(--r)">YAPYAP</b> 在销量与增速双维度绝对领先；<b style="color:#7c3aed">千禧梦·银河灰暗·腐根之里·血薪记</b>（大气泡）展现极强的国内用户吸引力，是<b>中式文化题材的护城河</b>信号。
+    </div>
+  </div>
+
+  <!-- 国区图：半宽，用两列grid放置 -->
+  <div class="combo-chart-grid">
+    <div class="cbox">
+      <div class="cbox-title">国区占比分层：本土 vs 国际产品</div>
+      <canvas id="cnDistChart" height="160"></canvas>
+      <div class="chart-note">国区占比 &gt;50% 的产品均为<b>中文题材</b>（千禧梦85.5%、血薪记81.1%、银河灰暗79.5%、腐根之里65.7%），本土文化题材=高留存护城河。</div>
+    </div>
+    <div class="cbox" style="display:flex;flex-direction:column;justify-content:center;padding:32px 36px;background:linear-gradient(135deg,rgba(124,58,237,.04),rgba(255,80,53,.03));">
+      <div style="font-size:13px;font-weight:700;color:var(--tl);letter-spacing:1px;margin-bottom:20px;">📊 国区分层速览</div>
+      <div style="display:flex;flex-direction:column;gap:12px;">
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div style="width:12px;height:12px;border-radius:50%;background:rgba(124,58,237,.75);flex-shrink:0;"></div>
+          <div style="font-size:14px;"><b>本土强势（&gt;50%）：</b>千禧梦、血薪记、银河灰暗、腐根之里 · 共4款</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div style="width:12px;height:12px;border-radius:50%;background:rgba(255,140,66,.7);flex-shrink:0;"></div>
+          <div style="font-size:14px;"><b>混合市场（20-50%）：</b>灾厄之石、轮回保险、你有饼吗、心跳弹珠台 · 共4款</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div style="width:12px;height:12px;border-radius:50%;background:rgba(180,190,210,.7);flex-shrink:0;"></div>
+          <div style="font-size:14px;"><b>全球向（&lt;20%）：</b>随时在一起、孤山独影及其余产品 · 共10款</div>
+        </div>
+        <div style="margin-top:8px;padding:14px 16px;background:#fff8f7;border-left:4px solid var(--r);border-radius:6px;font-size:13px;color:var(--tl);line-height:1.7;">
+          <b style="color:var(--r)">结论：</b>中式文化题材（梦核/国风/国产影视）是突破国区流量壁垒的最有效路径，国区占比与题材本土化程度高度正相关。
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div style="font-size:13px;color:var(--tl);font-weight:600;letter-spacing:1px;text-transform:uppercase;margin:22px 0 14px;padding-left:2px;">
+    1.4 &nbsp; 销量 Top 5 产品画像
+  </div>
+  <div class="combo-chart-grid">
+    <div class="combo-chart-full cbox">
+      <div class="cbox-title">总销量 · 近7日新增 · 国区占比（组合图）</div>
+      <canvas id="combo" height="110"></canvas>
+      <div class="chart-note">YAPYAP近7日新增 <b style="color:var(--r)">32.1万份</b>，仍占本周期销量增量的 <b>86%</b>；千禧梦国区占比 <b style="color:#7c3aed">85.5%</b> 远超其余产品，反映中式文化题材的强本土共鸣。</div>
+    </div>
+
+    <div class="combo-chart-full cbox">
+      <div class="cbox-title">近7日销量增速排名（高→低）</div>
+      <canvas id="growth" height="90"></canvas>
+      <div class="chart-note">YAPYAP 近7日增速 <b style="color:var(--r)">+70.2%</b>，以 <b>32.1万份</b> 断层领先；孤山独影以 4.2万排第二，其余产品增速趋于稳定。</div>
+    </div>
+  </div>
+
+  <!-- 产品竞争力矩阵 -->
+  <div style="font-size:13px;color:var(--tl);font-weight:600;letter-spacing:1px;text-transform:uppercase;margin:32px 0 14px;padding-left:2px;">
+    1.5 &nbsp; 产品竞争力矩阵（销量 × 增速）
+  </div>
+  <div style="background:#fafafa; border-radius:14px; padding:24px; margin-bottom:6px;">
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:2px; background:var(--br); border-radius:10px; overflow:hidden;">
+      <!-- 明星产品 -->
+      <div style="background:#fff; padding:24px; min-height:180px;">
+        <div style="font-size:13px; font-weight:700; color:#388e3c; border-bottom:3px solid #388e3c; padding-bottom:8px; margin-bottom:16px;">
+          ⭐ 明星产品（高销量+高增速）
+        </div>
+        <div style="margin-bottom:14px;">
+          <div style="font-weight:700; font-size:14px; color:var(--tx); margin-bottom:4px;">YAPYAP</div>
+          <div style="font-size:12px; color:var(--tl);">45.7万份 | 增速+70.2% | 语音施法派对</div>
+          <div style="margin-top:6px;">
+            <span style="display:inline-block; padding:3px 10px; background:#e8f5e9; color:#388e3c; font-size:10px; border-radius:12px; margin-right:4px; font-weight:600;">社交创新</span>
+            <span style="display:inline-block; padding:3px 10px; background:#fce4ec; color:var(--r); font-size:10px; border-radius:12px; font-weight:600;">可借鉴玩法</span>
+          </div>
+        </div>
+        <div>
+          <div style="font-weight:700; font-size:14px; color:var(--tx); margin-bottom:4px;">孤山独影</div>
+          <div style="font-size:12px; color:var(--tl);">31.6万份 | 增速+18.4%</div>
+          <div style="margin-top:6px;">
+            <span style="display:inline-block; padding:3px 10px; background:#e3f2fd; color:#1976d2; font-size:10px; border-radius:12px; font-weight:600;">稳定增长</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 问题产品 -->
+      <div style="background:#fff; padding:24px; min-height:180px;">
+        <div style="font-size:13px; font-weight:700; color:#1976d2; border-bottom:3px solid #1976d2; padding-bottom:8px; margin-bottom:16px;">
+          ❓ 问题产品（低销量+高增速）
+        </div>
+        <div style="margin-bottom:14px;">
+          <div style="font-weight:700; font-size:14px; color:var(--tx); margin-bottom:4px;">千禧梦</div>
+          <div style="font-size:12px; color:var(--tl);">12.0万份 | 增速+7.1% | 中式步行模拟</div>
+          <div style="margin-top:6px;">
+            <span style="display:inline-block; padding:3px 10px; background:#e8f5e9; color:#388e3c; font-size:10px; border-radius:12px; margin-right:4px; font-weight:600;">文化题材</span>
+
+          </div>
+        </div>
+        <div>
+          <div style="font-weight:700; font-size:14px; color:var(--tx); margin-bottom:4px;">凉屋系列产品</div>
+          <div style="font-size:12px; color:var(--tl);">多款小体量高增速</div>
+          <div style="margin-top:6px;">
+            <span style="display:inline-block; padding:3px 10px; background:#e3f2fd; color:#1976d2; font-size:10px; border-radius:12px; font-weight:600;">矩阵策略</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 金牛产品 -->
+      <div style="background:#fff; padding:24px; min-height:180px;">
+        <div style="font-size:13px; font-weight:700; color:#f57c00; border-bottom:3px solid #f57c00; padding-bottom:8px; margin-bottom:16px;">
+          💰 金牛产品（高销量+低增速）
+        </div>
+        <div>
+          <div style="font-weight:700; font-size:14px; color:var(--tx); margin-bottom:4px;">My Winter Car</div>
+          <div style="font-size:12px; color:var(--tl);">38.7万份 | 增速+4.9%</div>
+          <div style="margin-top:6px;">
+            <span style="display:inline-block; padding:3px 10px; background:#e3f2fd; color:#1976d2; font-size:10px; border-radius:12px; font-weight:600;">成熟品类</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 瘦狗产品 -->
+      <div style="background:#fff; padding:24px; min-height:180px;">
+        <div style="font-size:13px; font-weight:700; color:#9e9e9e; border-bottom:3px solid #9e9e9e; padding-bottom:8px; margin-bottom:16px;">
+          🐕 瘦狗产品（低销量+低增速）
+        </div>
+        <div>
+          <div style="font-weight:700; font-size:14px; color:var(--tx); margin-bottom:4px;">Gamblers</div>
+          <div style="font-size:12px; color:var(--tl);">0.9万份 | 增速+4.1%</div>
+        </div>
+        <div style="margin-top:12px;">
+          <div style="font-weight:700; font-size:14px; color:var(--tx); margin-bottom:4px;">其他长尾产品</div>
+          <div style="font-size:12px; color:var(--tl);">多款小众品类</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    </div>
+  </div>
+
+</div>
+<div class="section">
+  <div class="sec-title"><div class="sec-num">二</div><h2>头部产品深度解析</h2></div>
+  <p style="color:#999;font-size:13px;margin-bottom:22px;">已发售销量 TOP3 + 待发售愿望单 TOP3 &nbsp;·&nbsp; 点击产品可查看视频演示</p>
+  <div class="games">
+
+    <!-- 1 YAPYAP -->
+    <div class="gc">
+      <a href="https://www.bilibili.com/video/BV1LpFLzXEUQ" target="_blank" style="text-decoration:none;color:inherit;">
+      <div class="gc-top rel">
+        <div class="rank r1">1</div>
+        <div class="gm"><h3>YAPYAP · 语音施法多人派对</h3>
+          <div class="tags"><span class="tag">派对游戏</span><span class="tag">自研自发</span><span class="tag n">Maison Bap · 法国</span><span class="tag n">上线首月</span></div>
+        </div>
+        <div class="sc"><div class="sv">45.7万</div><div class="sl">总销量</div><div class="sg">↑+32.1万 近7日</div></div>
+        <div class="sc"><div class="sv">10.6%</div><div class="sl">国区占比</div></div>
+        <div class="sc"><span class="vbtn">▶ 视频演示</span></div>
+      </div>
+      </a>
+      <div class="gc-detail">
+        <div class="dg">
+          <div class="db"><h4>核心玩法</h4>
+            <p>玩家扮演受雇魔法仆从，<strong>潜入古老法师塔执行破坏任务</strong>。全程须对着麦克风吟唱咒语来施法，利用物理引擎堵塞马桶、让家具漂浮撞墙、引发连锁爆炸。在躲避奇葩魔兽追击的同时，与最多4名队友协作完成破坏指标，在局面彻底失控前成功撤离。</p>
+          </div>
+          <div class="db"><h4>三大玩法亮点</h4>
+            <ul>
+              <li><span class="hr">语音施法（Voice-to-Spell）：</span>游戏检测<span class="hb">语速与情绪</span>，被追逐时惊慌"嘴瓢"直接导致施法失败，生理反应与机制强绑定，<span class="hb">直播节目效果顶级</span></li>
+              <li><span class="hr">物理破坏沙盒：</span>万物皆可互动，<span class="hb">高自由度产生大量随机性</span>，玩家自发"骚操作"往往比预设关卡更有趣</li>
+              <li><span class="hr">惊悚喜剧平衡：</span>掉瞻怪物营造压迫感，施法失误瞬间转化为爆笑，<span class="hb">情绪剧烈波动极具成瘾性</span></li>
+            </ul>
+          </div>
+          <div class="db"><h4>研发背景</h4>
+            <p>法国工作室 <span class="hr">Maison Bap</span>，核心成员来自 <span class="hb">Ubisoft 创意部门</span>及《致命公司》Mod开发团队，推崇"低保真、高交互"设计哲学，专注通过物理引擎和社交互动制造"不可控的幽默"。</p>
+          </div>
+          <div class="db"><h4>市场洞察</h4>
+            <p>近7日增长率 <span class="hn">+70.2%</span>，<span class="hb">仍处于快速增长期</span>；海外占据 <span class="hn">89.4%</span>，国内认知度低但潜力空间大。语音交互机制构成竞品难以复制的<span class="hr">核心差异化壁垒</span>，与《致命公司》同类社交惊悚赛道形成明确对标。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2 My Winter Car -->
+    <div class="gc">
+      <a href="https://www.bilibili.com/video/BV1q9i6BNE7i" target="_blank" style="text-decoration:none;color:inherit;">
+      <div class="gc-top rel">
+        <div class="rank r2">2</div>
+        <div class="gm"><h3>My Winter Car · 芬兰冬日生存驾驶</h3>
+          <div class="tags"><span class="tag">汽车模拟</span><span class="tag">生存</span><span class="tag n">Amistech Games · 芬兰</span><span class="tag n">上线两个月</span></div>
+        </div>
+        <div class="sc"><div class="sv">38.7万</div><div class="sl">总销量</div><div class="sg">↑ 持续稳定增长</div></div>
+        <div class="sc"><div class="sv">1.0%</div><div class="sl">国区占比</div></div>
+        <div class="sc"><span class="vbtn">▶ 视频演示</span></div>
+      </div>
+      </a>
+      <div class="gc-detail">
+        <div class="dg">
+          <div class="db"><h4>核心玩法</h4>
+            <p>在极寒的芬兰冬季，<strong>玩家必须维护修理一辆破旧汽车以维持日常生存</strong>。包含真实的汽车拆装与发动机诊断修理机制，同时需对抗严寒、管理燃油与食物，完成芬兰乡村特有的日常任务（去超市、扫雪、享受桑拿等）。</p>
+          </div>
+          <div class="db"><h4>三大玩法亮点</h4>
+            <ul>
+              <li><span class="hr">真实汽车维修系统：</span>拆装发动机、更换轮胎、排查故障，<span class="hb">深度拟真体验</span>超越同类模拟器</li>
+              <li><span class="hr">生存与日常深度融合：</span>极寒环境管理 + 芬兰乡村文化场景，带来<span class="hb">高沉浸感的生活模拟</span></li>
+              <li><span class="hr">硬核社区效应：</span>高门槛反而形成强烈归属感，YouTube/TikTok攻略视频带来<span class="hb">持续长尾流量</span></li>
+            </ul>
+          </div>
+          <div class="db"><h4>市场背景</h4>
+            <p>《My Summer Car》系列精神续作，前作长期占据模拟类榜单。<span class="hb">极高硬核门槛</span>反而强化社区归属感，<span class="hr">口碑驱动的自然传播效应</span>显著。</p>
+          </div>
+          <div class="db"><h4>市场洞察</h4>
+            <p>国区仅 <span class="hn">1.0%</span>，<span class="hb">纯靠欧美市场驱动</span>，文化壁垒明显。38.7万份证明<span class="hr">小众垂直题材做到极致仍有强大市场空间</span>，参考价值在于深度模拟的产品逻辑与社区运营方式。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3 孤山独影 -->
+    <div class="gc">
+      <a href="https://www.bilibili.com/video/BV1bp66BcEa1" target="_blank" style="text-decoration:none;color:inherit;">
+      <div class="gc-top rel">
+        <div class="rank r3">3</div>
+        <div class="gm"><h3>孤山独影 · 极简攀岩挑战</h3>
+          <div class="tags"><span class="tag">攀岩模拟</span><span class="tag">极简</span><span class="tag n">The Game Bakers · 法国</span><span class="tag n">上线首月</span></div>
+        </div>
+        <div class="sc"><div class="sv">31.6万</div><div class="sl">总销量</div><div class="sg">↑ 强势开局</div></div>
+        <div class="sc"><div class="sv">13.6%</div><div class="sl">国区占比</div></div>
+        <div class="sc"><span class="vbtn">▶ 视频演示</span></div>
+      </div>
+      </a>
+      <div class="gc-detail">
+        <div class="dg">
+          <div class="db"><h4>核心玩法</h4>
+            <p>玩家独自攀登一座巨大岩山，<strong>通过鼠标/摇杆精准控制双手的位置与发力</strong>，在真实重力与体力消耗系统下寻找落脚点与抓握点，一步一步征服山顶。没有战斗、没有剧情，只有人与山的纯粹对话。</p>
+          </div>
+          <div class="db"><h4>三大玩法亮点</h4>
+            <ul>
+              <li><span class="hr">极简但极深的操控：</span><span class="hb">物理模拟的双手控制</span>，每次攀爬真实考验操作与决策，失误即跌落</li>
+              <li><span class="hr">冥想式沉浸体验：</span>极简美术 + 空灵音效，主打<span class="hb">「挑战自我」的情绪价值</span>，非传统关卡逻辑</li>
+              <li><span class="hr">「高难即内容」：</span>失败片段天然具有传播属性，<span class="hb">短视频二创生态</span>自发形成</li>
+            </ul>
+          </div>
+          <div class="db"><h4>市场背景</h4>
+            <p>承接《Getting Over It》精神内核，将同类玩法进一步精细化与视觉化。国区 <span class="hn">13.6%</span>，中国玩家对<span class="hb">「受苦」型内容接受度显著上升</span>。</p>
+          </div>
+          <div class="db"><h4>市场洞察</h4>
+            <p>「受苦游戏」已成独立游戏稳定细分赛道。<span class="hr">极简画面 + 硬核操作 + 短视频传播</span>三位一体，研发成本低、传播效率高，对我们研究差异化突破口有直接参考价值。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4 蝼蚁之城 -->
+    <div class="gc">
+      <div class="gc-top unrel">
+        <div class="rank soft">4</div>
+        <div class="gm"><h3>蝼蚁之城 · 赛博神话动作RPG</h3>
+          <div class="tags"><span class="tag">ARPG</span><span class="tag">待发售</span><span class="tag n">凉屋研发 · Spiral Up Games发行</span></div>
+        </div>
+        <div class="sc"><div class="sv">9.0万</div><div class="sl">愿望单</div><div class="sg">↑+2.6万 近7日</div></div>
+        <div class="sc"><div class="sv">+28.9%</div><div class="sl">7日增速</div></div>
+        <div class="sc" style="color:#ff5035;font-size:12px;font-weight:600;">⭐ 本月最值关注</div>
+      </div>
+      <div class="gc-detail">
+        <div class="dg">
+          <div class="db"><h4>核心玩法</h4>
+            <p>玩家扮演在神明统治世界中挣扎的合成人，<strong>以高速近战动作为核心展开叙事驱动的探索战斗</strong>。战斗强调精准弹刀反制（Parry）与失衡连击处决，节奏极快；同时融入赛博神话叙事，探索合成人的轮回与解脱。</p>
+          </div>
+          <div class="db"><h4>三大产品亮点</h4>
+            <ul>
+              <li><span class="hr">高速弹刀系统：</span><span class="hb">金属碰撞的生理爽感</span>极强，Parry判定精准，打击反馈到位</li>
+              <li><span class="hr">赛博神话叙事：</span>东方神话 × 赛博朋克，<span class="hb">差异化世界观</span>在Steam独立游戏中稀缺</li>
+              <li><span class="hr">凉屋品牌背书：</span>《元气骑士》的口碑积累，<span class="hb">核心玩家群体自带信任度</span></li>
+            </ul>
+          </div>
+          <div class="db"><h4>研发背景</h4>
+            <p>深圳凉屋(ChillyRoom)出品，是其从"地牢肉鸽"向<span class="hb">「叙事导向动作游戏」</span>跨越的重要标志。由 Spiral Up Games 负责海外发行，<span class="hr">专业分工保障发行质量</span>，2026年初试玩口碑极佳。</p>
+          </div>
+          <div class="db"><h4>重点关注</h4>
+            <p>愿望单 <span class="hn">9万</span>，近7日 <span class="hn">+2.6万（+28.9%）</span>，<span class="hb">本月未发售最值持续跟踪产品</span>。其上线节点及首周销量将直接验证"国产赛博神话"品类的市场天花板。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 5 虚空潜者 -->
+    <div class="gc">
+      <div class="gc-top unrel">
+        <div class="rank soft">5</div>
+        <div class="gm"><h3>虚空潜者：逃出深渊 · 超自然搜打撤</h3>
+          <div class="tags"><span class="tag">搜打撤</span><span class="tag">待发售</span><span class="tag n">LoadComplete</span></div>
+        </div>
+        <div class="sc"><div class="sv">6.8万</div><div class="sl">愿望单</div><div class="sg">↑+2.2万 近7日</div></div>
+        <div class="sc"><div class="sv">+32.4%</div><div class="sl">7日增速</div></div>
+        <div class="sc"></div>
+      </div>
+      <div class="gc-detail">
+        <div class="dg">
+          <div class="db"><h4>核心玩法</h4>
+            <p>玩家以 U.R.C.（超自然异常调查组织）成员身份，<strong>深入高风险维度裂缝区域进行搜索、战斗与撤离</strong>。每次入场需搜集加密文档与异常样本，限时找到撤离点，途中面对随机超自然威胁，物资与信息管理是核心策略维度。</p>
+          </div>
+          <div class="db"><h4>三大产品亮点</h4>
+            <ul>
+              <li><span class="hr">差异化题材：</span>用<span class="hb">超自然怪谈</span>包装撤离玩法，在《三角洲行动》热潮中提供独特口味</li>
+              <li><span class="hr">信息驱动策略：</span>加密文档解读带来<span class="hb">类解谜的叙事层</span>，丰富纯战斗撤离的单调感</li>
+              <li><span class="hr">买断制低门槛：</span>大厂撤离重氪重运营，该作独立轻量，<span class="hb">买断制竞争优势明显</span></li>
+            </ul>
+          </div>
+          <div class="db"><h4>市场洞察</h4>
+            <p>撤离类玩法2025-2026年持续火热，<span class="hr">独立游戏以题材差异化切入是当前最有效打法</span>。近7日增速+32.4%显示热度快速积累，关注EA/正式版节点。</p>
+          </div>
+          <div class="db"><h4>关注要点</h4>
+            <p>核心看点：<span class="hb">超自然题材与撤离玩法的化学反应</span>是否能形成独特体验。若叙事层做扎实，有望成为独立撤离赛道标杆。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 6 财迷心窍 -->
+    <div class="gc">
+      <div class="gc-top unrel">
+        <div class="rank soft">6</div>
+        <div class="gm"><h3>财迷心窍 · 贪婪主题肉鸽策略</h3>
+          <div class="tags"><span class="tag">Roguelite</span><span class="tag">卡牌策略</span><span class="tag">待发售</span><span class="tag n">ArtDock</span></div>
+        </div>
+        <div class="sc"><div class="sv">5.0万</div><div class="sl">愿望单</div><div class="sg">↑+0.3万 近7日</div></div>
+        <div class="sc"><div class="sv">+6.0%</div><div class="sl">7日增速</div></div>
+        <div class="sc"></div>
+      </div>
+      <div class="gc-detail">
+        <div class="dg">
+          <div class="db"><h4>核心玩法</h4>
+            <p>以"贪婪"为核心主题的Roguelite策略游戏，<strong>玩家扮演守财奴商人，通过卡牌/策略组合不断积累财富并抵御威胁</strong>。每局随机事件与选择分叉，贪婪行为带来短期收益与长期风险的持续博弈，形成"贪婪悖论"玩法张力。</p>
+          </div>
+          <div class="db"><h4>三大产品亮点</h4>
+            <ul>
+              <li><span class="hr">主题高度聚焦：</span><span class="hb">「贪婪」既是机制也是叙事</span>，玩法与世界观高度统一</li>
+              <li><span class="hr">策略深度：</span>资源积累与风险管理持续博弈，<span class="hb">Build构筑多样性</span>支撑重复可玩性</li>
+              <li><span class="hr">视觉风格独特：</span>黑色幽默美术调性，<span class="hb">差异化视觉识别度高</span></li>
+            </ul>
+          </div>
+          <div class="db"><h4>市场洞察</h4>
+            <p>近7日增速仅 +6.0%，<span class="hb">热度相对平稳</span>，尚未出现爆发节点。Roguelite赛道拥挤，<span class="hr">主题差异化是其最大竞争筹码</span>，上线后首周口碑将决定命运走向。</p>
+          </div>
+          <div class="db"><h4>关注要点</h4>
+            <p>核心观察指标：<span class="hb">EA上线后Steam评分与评测关键词</span>。若"策略深度"得到认可，凭借题材吸引力有望在肉鸽细分赛道突围。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="section">
+  <div class="sec-title"><div class="sec-num">三</div><h2>核心产品洞察</h2></div>
+
+  <div class="ins-h3">1. YAPYAP 海外爆火——语音交互开辟新赛道</div>
+  <div class="ibox">
+    <h4><span class="dot"></span>战略价值总结</h4>
+    <p>产品详细拆解见上方"头部产品解析"第1条。核心战略意义在于：语音施法机制构成<span class="hr">竞品难以复制的差异化壁垒</span>，近7日增长率 <span class="hn">+70.2%</span> 仍处快速增长期，<span class="hb">海外市场主导（89.4%）</span>说明该类型在海外有充分需求验证。「低保真画面 + 社交惊悚 + 语音交互」三位一体的设计逻辑，是我们在派对合作赛道上值得深度借鉴的方法论。</p>
+  </div>
+
+  <div class="ibox">
+    <h4><span class="dot"></span>YAPYAP × 三国杀：语音施法业务结合机会</h4>
+    <div style="background:#fffbf0; border-left:4px solid #f57c00; border-radius:8px; padding:20px; margin-bottom:20px;">
+      <p style="font-size:15px; line-height:1.8;"><strong>核心创新思路：</strong>将YAPYAP的语音施法机制移植到三国杀武将技能系统。<span class="highlight">不同于传统点击触发技能</span>，玩家需要<strong>对着麦克风喊出武将技能名称</strong>才能发动（如"杀！""闪！""桃！""无中生有！"）。在快节奏对决中，紧张情绪导致的"咬字不清"、"喊错技能"将直接影响战局，<span class="highlight">将生理反应转化为游戏机制</span>，大幅提升娱乐性与社交传播价值。</p>
+    </div>
+
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-bottom:20px;">
+      <div style="background:#fafafa; border-radius:10px; padding:20px;">
+        <div style="font-size:14px; font-weight:700; margin-bottom:14px; color:var(--tx);">成功要素权重分析</div>
+        <div style="margin-bottom:12px;">
+          <div style="display:flex; justify-content:space-between; margin-bottom:5px; font-size:13px;"><span>玩法创新（语音输入）</span><span style="font-weight:700; color:var(--r);">40%</span></div>
+          <div style="height:8px; background:#eee; border-radius:4px;"><div style="width:40%; height:100%; background:var(--grad); border-radius:4px;"></div></div>
+        </div>
+        <div style="margin-bottom:12px;">
+          <div style="display:flex; justify-content:space-between; margin-bottom:5px; font-size:13px;"><span>社交属性（多人派对）</span><span style="font-weight:700; color:#f57c00;">30%</span></div>
+          <div style="height:8px; background:#eee; border-radius:4px;"><div style="width:30%; height:100%; background:linear-gradient(135deg,#f57c00,#ff9800); border-radius:4px;"></div></div>
+        </div>
+        <div style="margin-bottom:12px;">
+          <div style="display:flex; justify-content:space-between; margin-bottom:5px; font-size:13px;"><span>营销节奏（TikTok传播）</span><span style="font-weight:700; color:#1976d2;">20%</span></div>
+          <div style="height:8px; background:#eee; border-radius:4px;"><div style="width:20%; height:100%; background:linear-gradient(135deg,#1976d2,#42a5f5); border-radius:4px;"></div></div>
+        </div>
+        <div>
+          <div style="display:flex; justify-content:space-between; margin-bottom:5px; font-size:13px;"><span>题材选择（魔法/奇幻）</span><span style="font-weight:700; color:#9e9e9e;">10%</span></div>
+          <div style="height:8px; background:#eee; border-radius:4px;"><div style="width:10%; height:100%; background:#9e9e9e; border-radius:4px;"></div></div>
+        </div>
+      </div>
+      <div style="background:#fafafa; border-radius:10px; padding:20px;">
+        <div style="font-size:14px; font-weight:700; margin-bottom:14px; color:var(--tx);">游卡能力匹配度评估</div>
+        <table style="width:100%; font-size:13px;">
+          <tr style="border-bottom:1px solid var(--br);">
+            <td style="padding:9px 0; font-weight:600;">玩法创新能力</td>
+            <td style="padding:9px 0; text-align:right;"><span style="padding:3px 10px; background:#e8f5e9; color:#388e3c; border-radius:10px; font-weight:700; font-size:11px;">强</span><div style="font-size:11px; color:var(--tl); margin-top:2px;">《三国杀》已验证</div></td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--br);">
+            <td style="padding:9px 0; font-weight:600;">社交机制设计</td>
+            <td style="padding:9px 0; text-align:right;"><span style="padding:3px 10px; background:#e8f5e9; color:#388e3c; border-radius:10px; font-weight:700; font-size:11px;">强</span><div style="font-size:11px; color:var(--tl); margin-top:2px;">桌游社交基因</div></td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--br);">
+            <td style="padding:9px 0; font-weight:600;">语音技术储备</td>
+            <td style="padding:9px 0; text-align:right;"><span style="padding:3px 10px; background:#fff3e0; color:#f57c00; border-radius:10px; font-weight:700; font-size:11px;">中</span><div style="font-size:11px; color:var(--tl); margin-top:2px;">需外部技术合作</div></td>
+          </tr>
+          <tr>
+            <td style="padding:9px 0; font-weight:600;">海外发行能力</td>
+            <td style="padding:9px 0; text-align:right;"><span style="padding:3px 10px; background:#ffebee; color:#d32f2f; border-radius:10px; font-weight:700; font-size:11px;">弱</span><div style="font-size:11px; color:var(--tl); margin-top:2px;">YAPYAP国区仅10.6%</div></td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    <div style="background:linear-gradient(135deg,rgba(255,80,53,.03),rgba(255,140,66,.02)); border-radius:10px; padding:24px; border:1.5px solid var(--rm);">
+      <div style="font-size:15px; font-weight:700; color:var(--r); margin-bottom:16px;">📋 三阶段实施方案</div>
+      <div style="display:grid; gap:14px;">
+        <div style="background:#fff; border-radius:8px; padding:18px; border-left:4px solid var(--r);">
+          <div style="display:flex; align-items:center; gap:10px; margin-bottom:8px;">
+            <span style="padding:3px 12px; background:#e3f2fd; color:#1976d2; font-size:11px; border-radius:20px; font-weight:700;">SHORT TERM · 3个月</span>
+            <span style="font-size:15px; font-weight:700;">MVP验证 · 限时活动模式</span>
+          </div>
+          <p style="font-size:13px; color:var(--tx); line-height:1.7; margin-bottom:10px;">在<strong>《三国杀手游》</strong>中开发<span class="highlight">"语音喊武将技能"限时活动</span>，开放3-5个热门武将（诸葛亮、赵云、貂蝉等），简化语音识别逻辑，验证玩家接受度。</p>
+          <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px; font-size:12px;">
+            <div><div style="color:var(--tl); margin-bottom:3px;">💰 投入</div><div style="font-weight:700;">≤30万元 + 2人月</div></div>
+            <div><div style="color:var(--tl); margin-bottom:3px;">📊 产出</div><div style="font-weight:700;">活动数据报告</div></div>
+            <div><div style="color:var(--tl); margin-bottom:3px;">✅ 决策点</div><div style="font-weight:700;">DAU提升≥15%则立项</div></div>
+          </div>
+        </div>
+        <div style="background:#fff; border-radius:8px; padding:18px; border-left:4px solid #f57c00;">
+          <div style="display:flex; align-items:center; gap:10px; margin-bottom:8px;">
+            <span style="padding:3px 12px; background:#fff3e0; color:#f57c00; font-size:11px; border-radius:20px; font-weight:700;">MID TERM · 6个月</span>
+            <span style="font-size:15px; font-weight:700;">独立立项 · "三国杀派对版"</span>
+          </div>
+          <p style="font-size:13px; color:var(--tx); line-height:1.7; margin-bottom:10px;">若DAU+15%以上，考虑独立立项<span class="highlight">"三国杀派对版"</span>，专注<strong>4-6人小局社交场景</strong>，强化语音交互，定位为轻量级社交派对游戏。</p>
+          <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px; font-size:12px;">
+            <div><div style="color:var(--tl); margin-bottom:3px;">💰 投入</div><div style="font-weight:700;">200-300万元</div></div>
+            <div><div style="color:var(--tl); margin-bottom:3px;">📊 产出</div><div style="font-weight:700;">独立产品上线</div></div>
+            <div><div style="color:var(--tl); margin-bottom:3px;">✅ 决策点</div><div style="font-weight:700;">首月留存≥35%</div></div>
+          </div>
+        </div>
+        <div style="background:#fff; border-radius:8px; padding:18px; border-left:4px solid #9e9e9e; font-size:13px; line-height:1.8;">
+          <div style="font-size:14px; font-weight:700; margin-bottom:8px; color:#757575;">⚠️ 风险对冲</div>
+          <p>技术上建议对接<strong>讯飞语音/腾讯云</strong>，避免自研延误；发行上优先聚焦<strong>国内市场+差异化玩法</strong>；若6个月内出现<strong>3款以上语音类爆款</strong>则窗口期关闭，需加速推进。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="ins-h3">2. 中式梦核崛起——文化共情驱动连续爆款</div>
+  <div class="tw">
+    <table class="ct">
+      <thead><tr><th>游戏名称</th><th>销量/愿望单</th><th>国区占比</th><th>核心特色</th><th>发行状态</th></tr></thead>
+      <tbody>
+        <tr><td><strong>千禧梦</strong></td><td><span class="num">12.0万份</span></td><td><span class="num">85.5%</span></td><td>步行模拟，中式怀旧，蝉鸣与诺基亚铃声</td><td>已发售 · 上线首月</td></tr>
+        <tr><td><strong>千禧梦游指南</strong></td><td><span class="num">0.4万</span>愿望单</td><td>—</td><td>开放世界扩展，异质日系统，更大探索体量</td><td>未发售</td></tr>
+        <tr><td><strong>千禧失乐园</strong></td><td><span class="num">0.2万</span>愿望单</td><td>—</td><td>恐怖解构，城市消失机制，叙事驱动</td><td>未发售</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="ibox">
+    <h4><span class="dot"></span>四大市场趋势</h4>
+    <p><strong class="hr">① 怀旧成刚需情感避难所：</strong>对 <span class="hb">95后00后</span> 而言，蝉鸣、电视雪花、诺基亚铃声构成的"千禧童年时空"已成为 <span class="hr">赛博庇护所</span>，游戏不再是寻找刺激，而是为了"回去"。</p>
+    <p><strong class="hr">② 阈限美学的本土化重塑：</strong>玩家转向 <span class="hb">红格地砖、绿皮火车、不锈钢扶手</span> 等中式视觉符号，精准文化共情是独立游戏以小博大的"必杀技"。</p>
+    <p><strong class="hr">③ 低保真审美的溢价化：</strong>VHS质感、像素点阵被赋予 <span class="hb">极高艺术溢价</span>，消解拟真的恐怖感，制造梦境特有的"模糊边界"。</p>
+    <p><strong class="hr">④ 直播友好机制：</strong><span class="hb">「一屏定胜负」</span>的视觉张力极适配B站/抖音传播逻辑，让独立游戏 <span class="hr">以近乎零成本获得极高自然流量</span>。</p>
+  </div>
+
+  <div class="ins-h3">3. 深圳凉屋加码——从肉鸽大厂到独游孵化器</div>
+  <div class="ibox">
+    <h4><span class="dot"></span>战略转型逻辑</h4>
+    <p>从《元气骑士》的"Roguelike大厂"定位，转型为 <span class="hb">「独游孵化器+多元精品工厂」</span>。通过招募独立制作人，构建 <span class="hr">「制作人负责制」小团队模式</span>，产品线横跨 <span class="hb">撤离射击、生物朋克动作、赛博神话</span> 多个维度，以规模化方式押注多赛道。</p>
+  </div>
+  <div class="ibox">
+    <h4><span class="dot"></span>三款核心新品拆解</h4>
+    <p><strong class="hr">① 查无此地：</strong><span class="hb">超自然撤离类</span>，U.R.C.组织成员深入维度碎片搜集物资。以"超自然怪谈"差异化题材切入撤离赛道，是凉屋对大热赛道的独立游戏化探索。</p>
+    <p><strong class="hr">② 绝地鸭卫：</strong>硬核动作，强调 <span class="hb">「洞察反制」（Parry）</span> 积累失衡值并处决。主角萌鸭 vs 生物朋克掉瞻怪物，<span class="hr">视觉反差冲突极具传播潜力</span>。</p>
+    <p><strong class="hr">③ 蝼蚁之城：</strong>赛博神话ARPG，探讨 <span class="hb">合成人在神明统治下的轮回与解脱</span>。当前愿望单 <span class="hn">9万</span>，近7日 <span class="hn">+2.6万（+28.9%）</span>，是凉屋向"叙事导向动作游戏"跨越的重要标志，<span class="hb">本月最值得持续跟踪的未发售产品</span>。</p>
+  </div>
+</div>
+
+
+
+
+
+
+<!-- ═══ FOOTER ═══ -->
+<div class="footer">
+  <div class="footer-main">
+    <div class="footer-brand">
+      <div class="fb-title">游卡网络 Yokaverse</div>
+      <div class="fb-sub">AI-POWERED DATA INTELLIGENCE · 产品研发部</div>
+      <div class="fb-tags">
+        <span class="fb-tag">🧠 AI数据分析</span>
+        <span class="fb-tag">📊 Steam监控</span>
+        <span class="fb-tag">🎯 2026年1月</span>
+      </div>
+    </div>
+    <div class="footer-center">
+      <div class="footer-emblem">🤖</div>
+      <div class="footer-vert"></div>
+    </div>
+    <div class="footer-right">
+      <div class="fr-label">数据来源</div><br>
+      SteamDB · B站 · 小黑盒<br>
+      TikTok · YouTube · Reddit<br>
+      Steam官方平台数据
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-sources">
+      <span>月度监控报告</span>
+      <span>报告生成：2026年2月</span>
+      <span>数据覆盖：2026年1月全月</span>
+    </div>
+    <div class="footer-copy">© 游卡网络战略发展部 · 仅供内部战略参考 · 请勿对外传播</div>
+  </div>
+</div>
+
+</div>
+
+<script>
+const R='#ff5035', R2='#ff8c42', RD='#c9280d', RL='rgba(255,80,53,.12)', LG='#e4e6f0';
+Chart.defaults.font.family = "'Microsoft YaHei','PingFang SC',sans-serif";
+Chart.defaults.font.size = 13;
+
+// ── TOP5 组合图：柱状+折线混合 ──
+(function(){
+  var ctx = document.getElementById('combo').getContext('2d');
+  var gBar = ctx.createLinearGradient(0,0,0,320);
+  gBar.addColorStop(0,'rgba(255,80,53,.9)'); gBar.addColorStop(1,'rgba(255,140,66,.5)');
+  var gLine = ctx.createLinearGradient(0,0,0,320);
+  gLine.addColorStop(0,'rgba(34,160,107,.9)'); gLine.addColorStop(1,'rgba(34,160,107,.3)');
+
+  new Chart(ctx, {
+    data: {
+      labels: ['YAPYAP','My Winter Car','孤山独影','Gamblers Table','千禧梦'],
+      datasets: [
+        {
+          type: 'bar', label: '总销量(万份)',
+          data: [45.7, 38.7, 31.6, 12.6, 12.0],
+          backgroundColor: gBar, borderRadius: 8, borderSkipped: false,
+          yAxisID: 'y', order: 2
+        },
+        {
+          type: 'bar', label: '近7日新增(万份)',
+          data: [32.1, 1.8, 4.2, 0.5, 0.8],
+          backgroundColor: 'rgba(255,200,100,.75)', borderRadius: 8, borderSkipped: false,
+          yAxisID: 'y', order: 3
+        },
+        {
+          type: 'line', label: '国区占比(%)',
+          data: [10.6, 1.0, 13.6, 5.7, 85.5],
+          borderColor: '#7c3aed', backgroundColor: 'rgba(124,58,237,.1)',
+          borderWidth: 3, pointRadius: 7, pointBackgroundColor: '#7c3aed',
+          pointBorderColor: '#fff', pointBorderWidth: 2,
+          fill: false, tension: 0.35, yAxisID: 'y2', order: 1
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      interaction: { mode: 'index', intersect: false },
+      plugins: {
+        legend: { position: 'top', labels: { padding: 20, font: { size: 13 } } },
+        tooltip: {
+          callbacks: {
+            label: function(ctx) {
+              var v = ctx.parsed.y;
+              if (ctx.dataset.yAxisID === 'y2') return ' 国区占比: ' + v + '%';
+              return ' ' + ctx.dataset.label + ': ' + v + '万';
+            }
+          }
+        }
+      },
+      scales: {
+        y: {
+          type: 'linear', position: 'left', beginAtZero: true,
+          grid: { color: 'rgba(0,0,0,.05)' },
+          ticks: { font: { size: 12 }, callback: function(v){ return v+'万'; } },
+          title: { display: true, text: '销量（万份）', font: { size: 12 }, color: '#888' }
+        },
+        y2: {
+          type: 'linear', position: 'right', beginAtZero: true, max: 100,
+          grid: { drawOnChartArea: false },
+          ticks: { font: { size: 12 }, callback: function(v){ return v+'%'; }, color: '#7c3aed' },
+          title: { display: true, text: '国区占比', font: { size: 12 }, color: '#7c3aed' }
+        },
+        x: { grid: { display: false }, ticks: { font: { size: 13 } } }
+      }
+    }
+  });
+})();
+
+
+// ══════════════════════════════════════════
+// 气泡图：销量 × 增速 × 国区占比
+// ══════════════════════════════════════════
+(function(){
+  var ctx = document.getElementById('bubbleChart').getContext('2d');
+
+  // [x=销量, y=7日增速%, r=气泡半径(国区占比换算)]
+  var domestic = [
+    {x:12.0, y:13.2, r:22, label:'千禧梦',    color:'rgba(124,58,237,.75)'},
+    {x:2.2,  y:10.0, r:20, label:'血薪记',     color:'rgba(124,58,237,.65)'},
+    {x:0.7,  y:133,  r:19, label:'银河灰暗角落', color:'rgba(124,58,237,.6)'},
+    {x:2.3,  y:15.0, r:17, label:'腐根之里',   color:'rgba(124,58,237,.55)'},
+    {x:9.7,  y:21.3, r:10, label:'轮回保险公司', color:'rgba(156,90,210,.5)'},
+    {x:1.1,  y:0.9,  r:9,  label:'灾厄之石',   color:'rgba(180,100,220,.45)'},
+    {x:1.4,  y:27.3, r:7,  label:'心跳弹珠台', color:'rgba(180,100,220,.4)'},
+    {x:4.2,  y:0.0,  r:7,  label:'你有饼吗？',  color:'rgba(180,100,220,.4)'},
+  ];
+
+  var global_ = [
+    {x:45.7, y:236.0, r:5, label:'YAPYAP',       color:'rgba(255,80,53,.9)'},
+    {x:38.7, y:1.8,   r:3, label:'My Winter Car', color:'rgba(255,130,66,.7)'},
+    {x:31.6, y:23.9,  r:4, label:'孤山独影',       color:'rgba(255,130,66,.7)'},
+    {x:12.6, y:5.9,   r:3, label:'Gamblers',      color:'rgba(200,180,160,.6)'},
+    {x:5.1,  y:27.5,  r:3, label:'Scam Line',     color:'rgba(200,180,160,.55)'},
+    {x:4.9,  y:2.1,   r:4, label:'DuneCrawl',     color:'rgba(200,180,160,.5)'},
+    {x:5.0,  y:11.1,  r:3, label:'铸剑吟',         color:'rgba(200,180,160,.5)'},
+    {x:3.9,  y:5.4,   r:3, label:'Feed Reactor',  color:'rgba(200,180,160,.45)'},
+    {x:2.3,  y:27.8,  r:3, label:'HELLMART',      color:'rgba(200,180,160,.45)'},
+    {x:2.1,  y:16.7,  r:4, label:'随时在一起',     color:'rgba(200,180,160,.4)'},
+  ];
+
+  var allData = [...domestic, ...global_];
+
+  new Chart(ctx, {
+    type: 'bubble',
+    data: {
+      datasets: [
+        {
+          label: '国区主导（>30%）',
+          data: domestic.map(d => ({x: d.x, y: d.y, r: d.r, label: d.label})),
+          backgroundColor: domestic.map(d => d.color),
+          borderColor: domestic.map(d => d.color.replace(/[\d.]+\)$/, '1)')),
+          borderWidth: 1.5,
+        },
+        {
+          label: '全球向（<30%）',
+          data: global_.map(d => ({x: d.x, y: d.y, r: d.r, label: d.label})),
+          backgroundColor: global_.map(d => d.color),
+          borderColor: global_.map(d => d.color.replace(/[\d.]+\)$/, '0.8)')),
+          borderWidth: 1.5,
+        }
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: true,
+      plugins: {
+        legend: { position: 'top', labels: { font: {size:12}, padding:16 } },
+        tooltip: {
+          callbacks: {
+            label: function(ctx) {
+              var d = ctx.raw;
+              return ' ' + d.label + '  销量:' + d.x + '万  增速:' + d.y + '%  气泡∝国区占比';
+            }
+          }
+        }
+      },
+      scales: {
+        x: {
+          title: { display:true, text:'总销量（万份）', font:{size:12}, color:'#5a5e80' },
+          grid: { color:'rgba(0,0,0,.05)' },
+          ticks: { font:{size:11}, color:'#757575' }
+        },
+        y: {
+          title: { display:true, text:'近7日增速（%）', font:{size:12}, color:'#5a5e80' },
+          grid: { color:'rgba(0,0,0,.05)' },
+          ticks: { font:{size:11}, color:'#757575' }
+        }
+      }
+    }
+  });
+})();
+
+// ══════════════════════════════════════════
+// 国区占比分层条形图（水平）
+// ══════════════════════════════════════════
+(function(){
+  var ctx = document.getElementById('cnDistChart').getContext('2d');
+  var labels = ['千禧梦','血薪记','银河灰暗','腐根之里','灾厄之石','轮回保险公司','你有饼吗？','心跳弹珠台','随时在一起','孤山独影'];
+  var vals   = [85.5, 81.1, 79.5, 65.7, 42.2, 33.3, 20.8, 20.0, 15.5, 13.6];
+  var colors = vals.map(v => v > 50 ? 'rgba(124,58,237,.75)' : v > 20 ? 'rgba(255,140,66,.7)' : 'rgba(180,190,210,.6)');
+
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: labels,
+      datasets: [{ label:'国区占比%', data: vals, backgroundColor: colors, borderRadius:6, borderSkipped:false }]
+    },
+    options: {
+      indexAxis: 'y',
+      responsive:true, maintainAspectRatio:true,
+      plugins: {
+        legend: {display:false},
+        tooltip: { callbacks: { label: ctx => ' ' + ctx.parsed.x + '%' } }
+      },
+      scales: {
+        x: { max:100, grid:{color:'rgba(0,0,0,.05)'}, ticks:{font:{size:10},color:'#757575',callback:v=>v+'%'} },
+        y: { grid:{display:false}, ticks:{font:{size:10},color:'#5a5e80'} }
+      }
+    }
+  });
+})();
+
+
+// ── TOP5 近7日增速横向条形图（倒序：最小值在顶，最大值在底）──
+(function(){
+  var ctx = document.getElementById('growth').getContext('2d');
+  // 倒序：从小到大排列，视觉上最大值在最底部最醒目
+  var colors = [
+    'rgba(255,80,53,.95)','rgba(255,110,60,.8)','rgba(255,150,80,.75)',
+    'rgba(255,180,100,.7)','rgba(200,200,220,.8)'
+  ];
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: ['YAPYAP +70.2%','孤山独影 +18.4%','千禧梦 +7.1%','My Winter +4.9%','Gamblers +4.1%'],
+      datasets: [{
+        label: '近7日销量新增（万份）',
+        data: [32.1, 4.2, 0.8, 1.8, 0.5],
+        backgroundColor: colors,
+        borderRadius: 8, borderSkipped: false
+      }]
+    },
+    options: {
+      responsive: true,
+      indexAxis: 'y',
+      plugins: {
+        legend: { display: false },
+        tooltip: { callbacks: { label: function(c){ return ' +'+c.parsed.x+'万份'; } } }
+      },
+      scales: {
+        x: { beginAtZero: true, grid: { color: 'rgba(0,0,0,.05)' }, ticks: { font:{size:12}, callback:function(v){return v+'万';} } },
+        y: { grid: { display: false }, ticks: { font: { size: 12 } } }
+      }
+    }
+  });
+})();
+
+// Gradient helper
+function makeGrad(ctx, c1, c2, vertical) {
+  var g = vertical
+    ? ctx.createLinearGradient(0,0,0,300)
+    : ctx.createLinearGradient(0,0,400,0);
+  g.addColorStop(0, c1); g.addColorStop(1, c2); return g;
+}
+
+// ── 圆环图 1: 发售状态
+(function(){
+  var ctx = document.getElementById('c1').getContext('2d');
+  var g1 = ctx.createLinearGradient(0,0,200,200);
+  g1.addColorStop(0,'#ff5035'); g1.addColorStop(1,'#ff8c42');
+  new Chart(ctx, {
+    type: 'doughnut',
+    data: {
+      labels: ['已发售 18款','未发售 14款'],
+      datasets:[{ data:[18,14], backgroundColor:[g1,'#ffe0d8'],
+        borderWidth:4, borderColor:'#fff', hoverOffset:8 }]
+    },
+    options:{
+      responsive:true, cutout:'62%',
+      plugins:{
+        legend:{ position:'bottom', labels:{ padding:18, font:{size:13},
+          generateLabels:function(c){
+            return c.data.labels.map(function(l,i){return{
+              text: l + (i===0?' — YAPYAP·My Winter Car·孤山独影':' — 蝼蚁之城·虚空潜者·财迷心窍'),
+              fillStyle:c.data.datasets[0].backgroundColor[i], hidden:false, index:i};});
+          }
+        }}
+      }
+    }
+  });
+})();
+
+// ── 饼图 2: 发行方式
+(function(){
+  var ctx = document.getElementById('c2').getContext('2d');
+  var g1 = ctx.createLinearGradient(0,0,200,200);
+  g1.addColorStop(0,'#ff5035'); g1.addColorStop(1,'#ff8c42');
+  var g2 = ctx.createLinearGradient(0,0,200,200);
+  g2.addColorStop(0,'#ffb09a'); g2.addColorStop(1,'#ffd5c8');
+  new Chart(ctx, {
+    type: 'doughnut',
+    data: {
+      labels: ['自研自发 13款','签约发行 5款'],
+      datasets:[{ data:[13,5], backgroundColor:[g1,g2],
+        borderWidth:4, borderColor:'#fff', hoverOffset:8 }]
+    },
+    options:{
+      responsive:true, cutout:'62%',
+      plugins:{
+        legend:{ position:'bottom', labels:{ padding:18, font:{size:13},
+          generateLabels:function(c){
+            return c.data.labels.map(function(l,i){return{
+              text: l + (i===0?' (72%) — YAPYAP, 千禧梦等':' (28%) — 轮回保险, 腐根之里等'),
+              fillStyle:c.data.datasets[0].backgroundColor[i], hidden:false, index:i};});
+          }
+        }}
+      }
+    }
+  });
+})();
+
+// ── 横向柱图 3: 销量
+(function(){
+  var ctx = document.getElementById('c3').getContext('2d');
+  var vals = [45.7,38.7,31.6,12.6,12.0,9.7,5.1,5.0,4.9,4.2];
+  var colors = vals.map(function(v,i){
+    if(i<3){ var g=ctx.createLinearGradient(0,0,460,0); g.addColorStop(0,'#ff5035'); g.addColorStop(1,'#ff8c42'); return g; }
+    if(i<5){ var g=ctx.createLinearGradient(0,0,460,0); g.addColorStop(0,'#ffb09a'); g.addColorStop(1,'#ffd0c0'); return g; }
+    return LG;
+  });
+  new Chart(ctx, {
+    type:'bar',
+    data:{
+      labels:['YAPYAP','My Winter Car','孤山独影','Gamblers Table','千禧梦','轮回保险','Scam Line','铸剑吟','DuneCrawl','你有饼吗'],
+      datasets:[{ data:vals, backgroundColor:colors, borderRadius:6, borderSkipped:false }]
+    },
+    options:{
+      responsive:true, indexAxis:'y',
+      plugins:{
+        legend:{display:false},
+        annotation:{annotations:[{
+          type:'line', scaleID:'x', value:10,
+          borderColor:RD, borderWidth:2, borderDash:[6,4],
+          label:{enabled:true,content:'10万份门槛',position:'end',backgroundColor:RD,color:'#fff',font:{size:11},padding:{x:8,y:4}}
+        }]}
+      },
+      scales:{
+        x:{ beginAtZero:true, grid:{color:'rgba(0,0,0,.05)'}, ticks:{font:{size:12}} },
+        y:{ grid:{display:false}, ticks:{font:{size:12}} }
+      }
+    }
+  });
+})();
+
+// ── 横向柱图 4: 国区占比
+(function(){
+  var ctx = document.getElementById('c4').getContext('2d');
+  var vals = [85.5,81.1,42.2,33.3,20.8,13.6,10.6,10.0,8.0,5.7];
+  var colors = vals.map(function(v,i){
+    if(i<2){ var g=ctx.createLinearGradient(0,0,400,0); g.addColorStop(0,'#ff5035'); g.addColorStop(1,'#ff8c42'); return g; }
+    if(i<5){ var g=ctx.createLinearGradient(0,0,400,0); g.addColorStop(0,'#ffb09a'); g.addColorStop(1,'#ffd0c0'); return g; }
+    return LG;
+  });
+  new Chart(ctx, {
+    type:'bar',
+    data:{
+      labels:['千禧梦','血薪记','灾厄之石','轮回保险','你有饼吗','孤山独影','YAPYAP','铸剑吟','地狱超市','Gamblers Table'],
+      datasets:[{ data:vals, backgroundColor:colors, borderRadius:6, borderSkipped:false }]
+    },
+    options:{
+      responsive:true, indexAxis:'y',
+      plugins:{
+        legend:{display:false},
+        annotation:{annotations:[{
+          type:'line', scaleID:'x', value:20,
+          borderColor:RD, borderWidth:2, borderDash:[6,4],
+          label:{enabled:true,content:'20%基准线',position:'end',backgroundColor:RD,color:'#fff',font:{size:11},padding:{x:8,y:4}}
+        }]}
+      },
+      scales:{
+        x:{ beginAtZero:true, max:100, grid:{color:'rgba(0,0,0,.05)'}, ticks:{callback:function(v){return v+'%';}, font:{size:12}} },
+        y:{ grid:{display:false}, ticks:{font:{size:12}} }
+      }
+    }
+  });
+})();
+</script>
+</body>
+</html>
