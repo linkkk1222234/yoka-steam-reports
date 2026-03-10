@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>2026年2月Steam新游监控月报 · 游卡网络</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --r: #ff5035; --rd: #c9280d; --r2: #ff8c42;
+  --rl: #fff4f2; --rm: #ffd5ce; --br: #e8eaf0;
+  --bg: #f0f1f7; --tx: #14152a; --tl: #5a5e80;
+  --grad: linear-gradient(135deg, #ff5035 0%, #ff8c42 100%);
+  --grad-deep: linear-gradient(140deg, #c9280d 0%, #ff5035 50%, #ff8c42 100%);
+  --shadow: 0 2px 14px rgba(20,21,42,.08);
+}
+* { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+body {
+  font-family: 'PingFang SC','Microsoft YaHei','Arial',sans-serif;
+  background: var(--bg); color: var(--tx); line-height: 1.75; font-size: 14px;
+}
+.wrap { padding: 14px 14px 40px; }
+
+/* ===== HEADER ===== */
+.header {
+  background: var(--grad-deep);
+  border-radius: 18px; margin-bottom: 16px;
+  box-shadow: 0 8px 30px rgba(255,80,53,.25);
+  overflow: hidden; position: relative;
+}
+.header-body { padding: 24px 20px 18px; color: #fff; position: relative; z-index:2; }
+.header-eyebrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(255,255,255,.15); border: 1px solid rgba(255,255,255,.3);
+  border-radius: 40px; padding: 5px 14px; font-size: 11px; letter-spacing: 2px;
+  margin-bottom: 14px;
+}
+.pulse { width:6px; height:6px; border-radius:50%; background:#fff; animation: pulse 2s infinite; }
+@keyframes pulse { 0%{box-shadow:0 0 0 0 rgba(255,255,255,.6)} 70%{box-shadow:0 0 0 6px rgba(255,255,255,0)} 100%{box-shadow:0 0 0 0 rgba(255,255,255,0)} }
+.header h1 { font-family:'Noto Serif SC',serif; font-size:26px; font-weight:700; margin-bottom:6px; letter-spacing:.5px; }
+.header-rule { width:40px; height:3px; background:rgba(255,255,255,.5); border-radius:2px; margin:12px 0 14px; }
+.meta-row { font-size:12px; line-height:1.9; opacity:.85; }
+.meta-row b { background:rgba(255,255,255,.2); padding:1px 8px; border-radius:20px; margin:0 2px; font-size:12px; }
+.header-bar {
+  background:rgba(0,0,0,.18); border-top:1px solid rgba(255,255,255,.1);
+  padding:10px 20px; display:flex; flex-wrap:wrap; gap:8px;
+  color:rgba(255,255,255,.7); font-size:11px;
+}
+.hb-item { display:flex; align-items:center; gap:5px; }
+.hb-pip { width:4px; height:4px; border-radius:50%; background:rgba(255,140,66,.9); }
+
+/* ===== INSIGHT BLOCK ===== */
+.insight-wrap { background:#fff; border-radius:16px; padding:20px 16px; margin-bottom:14px; box-shadow:var(--shadow); border-top:4px solid var(--r); }
+.insight-label { font-size:11px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:var(--tl); margin-bottom:16px; }
+.ins-card { border-radius:12px; padding:16px; margin-bottom:12px; }
+.ins-card:last-child { margin-bottom:0; }
+.ins-num { width:30px; height:30px; border-radius:50%; display:flex; align-items:center; justify-content:center; color:#fff; font-weight:800; font-size:14px; flex-shrink:0; }
+.ins-row { display:flex; gap:12px; align-items:flex-start; }
+.ins-title { font-size:15px; font-weight:700; margin-bottom:8px; color:var(--tx); }
+.ins-sub { font-size:12px; color:var(--tl); line-height:1.75; }
+.ins-sub b { color:var(--tx); }
+.ins-sub strong { color:var(--r); }
+
+/* ===== METRICS ===== */
+.metrics { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:14px; }
+.mc {
+  background:#fff; padding:16px 14px; border-radius:14px;
+  box-shadow:var(--shadow); position:relative; overflow:hidden;
+  border:1px solid rgba(232,234,240,.9);
+}
+.mc::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; background:var(--grad); }
+.mc .ml { color:var(--tl); font-size:10px; text-transform:uppercase; letter-spacing:1px; margin-bottom:6px; }
+.mc .mv { font-size:16px; font-weight:700; margin-bottom:4px; background:var(--grad); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; line-height:1.2; }
+.mc .ms { color:#aaa; font-size:10.5px; }
+
+/* ===== HIGHLIGHT NUMBERS ===== */
+.stat-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:14px; }
+.stat-card { background:#fff; border-radius:14px; padding:18px 14px; box-shadow:var(--shadow); }
+
+/* ===== SECTION ===== */
+.section { background:#fff; padding:20px 16px; border-radius:16px; margin-bottom:14px; box-shadow:var(--shadow); border:1px solid rgba(232,234,240,.8); position:relative; overflow:hidden; }
+.section::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; background:linear-gradient(90deg,var(--r),var(--r2),transparent); opacity:.5; }
+.sec-title { display:flex; align-items:center; gap:12px; margin-bottom:18px; padding-bottom:14px; border-bottom:1.5px solid var(--br); }
+.sec-num { width:36px; height:36px; border-radius:10px; flex-shrink:0; background:var(--grad); color:#fff; display:flex; align-items:center; justify-content:center; font-size:15px; font-weight:700; box-shadow:0 4px 14px rgba(255,80,53,.35); }
+.sec-title h2 { font-family:'Noto Serif SC',serif; font-size:18px; font-weight:700; }
+
+/* ===== GAME CARDS ===== */
+.gc { border:1.5px solid var(--br); border-radius:12px; overflow:hidden; margin-bottom:12px; }
+.gc:last-child { margin-bottom:0; }
+.gc-header { padding:14px 14px 10px; background:#fff; border-bottom:1px solid #f5f5f5; }
+.gc-rank-row { display:flex; align-items:center; gap:10px; margin-bottom:8px; }
+.rank { width:40px; height:40px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:18px; font-weight:700; color:#fff; flex-shrink:0; }
+.rank.r1 { background:var(--grad); }
+.rank.r2 { background:linear-gradient(135deg,#ff6e3a,#d93a18); }
+.rank.r3 { background:linear-gradient(135deg,#ff9060,#e05530); }
+.rank.r4 { background:linear-gradient(135deg,#ffb080,#e07040); }
+.rank.r5 { background:linear-gradient(135deg,#d4401a,#e87050); }
+.rank.r6 { background:linear-gradient(135deg,#c06040,#d88060); }
+.rank.focus-r { background:linear-gradient(135deg,#e53935,#b71c1c); }
+.gc-name { font-size:15px; font-weight:700; flex:1; color:var(--tx); line-height:1.3; }
+.tags { display:flex; gap:5px; flex-wrap:wrap; margin-top:6px; }
+.tag { background:var(--rl); color:var(--r); font-size:10px; padding:2px 9px; border-radius:20px; font-weight:600; border:1px solid var(--rm); }
+.tag.n { background:#f2f3f8; color:#666; border-color:var(--br); }
+.tag.focus-tag { background:#ffebee; color:#b71c1c; border-color:#ef9a9a; }
+.gc-stats { display:grid; grid-template-columns:1fr 1fr 1fr; background:#fafafa; border-bottom:1px solid #f0f0f0; }
+.sc { padding:10px 8px; text-align:center; }
+.sc .sv { font-size:15px; font-weight:700; background:var(--grad); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+.sc .sl { font-size:9.5px; color:#bbb; text-transform:uppercase; margin-top:2px; }
+.sc .sg { font-size:10px; color:#16a34a; font-weight:600; margin-top:2px; }
+.gc-body { padding:14px; }
+.db { margin-bottom:12px; }
+.db:last-child { margin-bottom:0; }
+.db h4 { font-size:13px; font-weight:700; color:var(--tl); margin-bottom:6px; padding-left:8px; border-left:3px solid var(--r); }
+.db p, .db li { font-size:12.5px; color:var(--tl); line-height:1.8; }
+.db ul { padding-left:14px; }
+.db li { margin-bottom:4px; }
+.hr { color:var(--r); font-weight:600; }
+.hb { background:linear-gradient(transparent 55%,rgba(255,200,50,.4) 55%); padding:0 2px; }
+.hn { color:var(--r); font-weight:700; }
+
+/* ===== MATRIX ===== */
+.matrix { border-radius:12px; overflow:hidden; border:1px solid var(--br); }
+.matrix-row { display:grid; grid-template-columns:1fr 1fr; border-bottom:1px solid var(--br); }
+.matrix-row:last-child { border-bottom:none; }
+.matrix-cell { padding:14px 12px; background:#fff; border-right:1px solid var(--br); }
+.matrix-cell:last-child { border-right:none; }
+.matrix-cell-title { font-size:12px; font-weight:700; border-bottom:2px solid; padding-bottom:7px; margin-bottom:10px; }
+.matrix-cell p { font-size:12px; color:var(--tl); line-height:1.7; }
+.mini-badge { display:inline-block; padding:2px 8px; border-radius:10px; font-size:9.5px; font-weight:600; margin-top:5px; }
+
+/* ===== TABLE ===== */
+.tw { overflow-x:auto; -webkit-overflow-scrolling:touch; border-radius:10px; margin-bottom:14px; }
+.ct { width:100%; border-collapse:collapse; font-size:11px; min-width:500px; }
+.ct th { background:linear-gradient(135deg,var(--r),var(--r2)); color:#fff; padding:10px 8px; text-align:left; font-size:10px; letter-spacing:.5px; white-space:nowrap; }
+.ct td { padding:10px 8px; border-bottom:1px solid var(--br); color:var(--tx); vertical-align:middle; }
+.ct tr:last-child td { border-bottom:none; }
+.ct tr:nth-child(even) td { background:#fafbff; }
+.ct td.num { font-weight:700; color:var(--r); }
+.tw-hint { font-size:10px; color:#aaa; margin-bottom:6px; }
+
+/* ===== IBOX ===== */
+.ibox { background:#fafbff; border-radius:12px; padding:16px; margin-bottom:12px; border:1px solid var(--br); }
+.ibox h4 { font-size:13.5px; font-weight:700; color:var(--tx); margin-bottom:10px; display:flex; align-items:center; gap:8px; }
+.dot { display:inline-block; width:7px; height:7px; border-radius:50%; background:var(--r); flex-shrink:0; }
+.ibox p { font-size:12.5px; color:var(--tl); line-height:1.8; }
+.ins-h3 { font-family:'Noto Serif SC',serif; font-size:15px; font-weight:700; color:var(--tx); margin:18px 0 12px; padding-left:10px; border-left:4px solid var(--r); line-height:1.5; }
+
+/* ===== PUBLISHER CARDS ===== */
+.pub-card { background:#fff; border-radius:14px; padding:18px 14px; box-shadow:var(--shadow); border:1.5px solid var(--br); margin-bottom:12px; }
+.pub-header { display:flex; align-items:center; gap:12px; margin-bottom:12px; }
+.pub-icon { width:50px; height:50px; border-radius:12px; flex-shrink:0; display:flex; align-items:center; justify-content:center; }
+.pub-name { font-size:16px; font-weight:800; color:var(--tx); }
+.pub-sub { font-size:11px; color:var(--tl); margin-top:2px; }
+.pub-desc { font-size:12.5px; color:#4a4e70; line-height:1.8; margin-bottom:10px; }
+.pub-tags { display:flex; flex-wrap:wrap; gap:5px; margin-bottom:10px; }
+.pub-tag { padding:3px 10px; border-radius:20px; font-size:10.5px; font-weight:600; }
+.pub-game { display:flex; justify-content:space-between; align-items:center; background:var(--rl); border-radius:9px; padding:8px 12px; margin-bottom:6px; }
+.pub-game-name { font-size:12.5px; font-weight:700; color:var(--tx); }
+.pub-game-num { font-size:13px; font-weight:800; background:var(--grad); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+
+/* ===== TRACKING CARDS ===== */
+.track-card { background:#fff; border-radius:14px; padding:16px 14px; box-shadow:var(--shadow); margin-bottom:12px; border:1px solid var(--br); }
+.track-header { display:flex; align-items:center; gap:10px; margin-bottom:12px; }
+.track-icon { width:40px; height:40px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:20px; flex-shrink:0; }
+.track-name { font-size:15px; font-weight:700; color:var(--tx); }
+.track-meta { font-size:11px; color:var(--tl); }
+.track-snapshots { display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:10px; }
+.snap { border-radius:10px; padding:12px; text-align:center; }
+.snap-date { font-size:10px; font-weight:600; margin-bottom:4px; }
+.snap-num { font-size:22px; font-weight:800; line-height:1; }
+.snap-unit { font-size:10px; color:var(--tl); }
+.snap-ratio { font-size:11px; color:#888; margin-top:4px; }
+.track-growth { background:#f8f9fc; border-radius:10px; padding:10px 12px; margin-bottom:10px; display:flex; justify-content:space-between; align-items:center; }
+.track-body { font-size:12px; color:var(--tl); line-height:1.75; background:#fafafa; border-radius:9px; padding:10px 12px; border-left:3px solid var(--r); }
+
+/* ===== PCU OLD GAMES ===== */
+.pcu-card { background:#fff; border-radius:12px; padding:14px; box-shadow:var(--shadow); margin-bottom:10px; }
+.pcu-name { font-size:14px; font-weight:700; color:var(--tx); margin-bottom:4px; }
+.pcu-sub { font-size:11px; color:var(--tl); margin-bottom:8px; }
+.pcu-num { font-size:24px; font-weight:800; }
+.pcu-badges { display:flex; flex-wrap:wrap; gap:5px; margin-bottom:8px; }
+.pcu-desc { font-size:12px; color:var(--tl); line-height:1.7; background:#fafafa; border-radius:8px; padding:8px 10px; }
+
+/* ===== STS2 HIGHLIGHT ===== */
+.sts2-bar { background:linear-gradient(135deg,#1e1340,#2d1b69); border-radius:14px; padding:16px; margin-bottom:14px; box-shadow:0 6px 24px rgba(124,58,237,.25); }
+.sts2-title { font-size:17px; font-weight:800; color:#fff; margin-bottom:4px; }
+.sts2-sub { font-size:11px; color:rgba(255,255,255,.55); margin-bottom:12px; }
+.sts2-stats { display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px; }
+.sts2-stat { text-align:center; }
+.sts2-val { font-size:20px; font-weight:800; color:#c4b5fd; }
+.sts2-label { font-size:10px; color:rgba(255,255,255,.5); margin-top:2px; }
+
+/* ===== FOOTER ===== */
+.footer { background:linear-gradient(140deg,#1e1228,#14152a); padding:26px 20px 30px; border-radius:16px; margin-top:6px; }
+.footer-brand { font-size:16px; font-weight:700; color:#fff; margin-bottom:4px; font-family:'Noto Serif SC',serif; }
+.footer-sub { font-size:10px; color:rgba(255,255,255,.4); letter-spacing:2px; text-transform:uppercase; margin-bottom:14px; }
+.footer-tags { display:flex; flex-wrap:wrap; gap:6px; margin-bottom:16px; }
+.fb-tag { background:rgba(255,80,53,.2); color:rgba(255,255,255,.7); font-size:10px; padding:3px 10px; border-radius:20px; border:1px solid rgba(255,80,53,.3); }
+.footer-data { font-size:11px; color:rgba(255,255,255,.4); line-height:1.9; margin-bottom:14px; }
+.footer-copy { font-size:10px; color:rgba(255,255,255,.25); padding-top:14px; border-top:1px solid rgba(255,255,255,.08); }
+
+/* ===== DATA ROWS for section 1 ===== */
+.data-table-simple { width:100%; border-radius:10px; overflow:hidden; border:1px solid var(--br); margin-bottom:14px; }
+.dts-row { display:flex; justify-content:space-between; align-items:center; padding:11px 12px; background:#fff; border-bottom:1px solid var(--br); }
+.dts-row:last-child { border-bottom:none; }
+.dts-row:nth-child(even) { background:#fafbff; }
+.dts-name { font-size:13px; font-weight:700; color:var(--tx); }
+.dts-val { font-size:14px; font-weight:800; background:var(--grad); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+.dts-sub { font-size:10px; color:var(--tl); margin-top:1px; }
+.sub-label { font-size:11px; font-weight:600; color:var(--tl); letter-spacing:1px; text-transform:uppercase; margin:14px 0 8px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-body">
+    <div class="header-eyebrow"><div class="pulse"></div>游卡网络 · 战略分析组</div>
+    <h1>2026年2月<br>Steam新游监控月报</h1>
+    <div class="header-rule"></div>
+    <div class="meta-row">
+      已发售重点产品 <b>5款</b> · 未发售重点产品 <b>18款</b><br>
+      Windrose风启之旅(79万愿望单) · Big Walk(56万)<br>
+      监控平台：Steam · B站 · 小红书 · TikTok · Youtube · Reddit<br>
+      <span style="font-size:11px;opacity:.6;">数据截至 2026年3月6日 · 标红产品为本月重点关注对象</span>
+    </div>
+  </div>
+  <div class="header-bar">
+    <div class="hb-item"><div class="hb-pip"></div>监控产品 23 款</div>
+    <div class="hb-item"><div class="hb-pip"></div>已发售 5 款</div>
+    <div class="hb-item"><div class="hb-pip"></div>待发售 18 款</div>
+    <div class="hb-item"><div class="hb-pip"></div>内部参考 · 请勿外传</div>
+  </div>
+</div>
+
+<!-- 关键洞察 -->
+<div class="insight-wrap">
+  <div class="insight-label">📌 本月关键洞察</div>
+
+  <!-- 洞察1 -->
+  <div class="ins-card" style="background:#fff8f7;border-left:4px solid var(--r);">
+    <div class="ins-row">
+      <div class="ins-num" style="background:var(--grad);">1</div>
+      <div>
+        <div class="ins-title">连出双现象级爆款：STS2 × 喵喵的结合定义2026年卡牌Roguelike新标杆</div>
+      </div>
+    </div>
+    <div style="margin-top:12px;display:grid;gap:8px;">
+      <div style="background:#fff;border-radius:10px;padding:12px;border-left:4px solid #c9280d;">
+        <div style="font-size:12px;font-weight:700;color:#c9280d;margin-bottom:5px;">🃏 Slay the Spire 2（3月5日EA）</div>
+        <div class="ins-sub">首4天约<strong>300万份</strong>，PCU峰值<strong>57.4万</strong>，2026年最强EA首发。核心差异化：<b>多人联机（1-4人）</b>——路线投票、全体DEBUFF共享、战利品争抢。简中测评占总评19.6%，国内付费意愿极强。</div>
+      </div>
+      <div style="background:#fff;border-radius:10px;padding:12px;border-left:4px solid #e53935;">
+        <div style="font-size:12px;font-weight:700;color:#e53935;margin-bottom:5px;">🐱 喵喵的结合（2月10日发售）</div>
+        <div class="ins-sub">首月<strong>180万份</strong>，PCU峰值<strong>115,428人</strong>，超越《哈迪斯2》首发。13年沉淀IP信任 × 遗传模拟Roguelike机制孤品 × UGC自驱传播——验证了深度卡牌育成品类极强的变现天花板。78%买家来自老玩家，3小时内回收全部开发成本。</div>
+      </div>
+      <div style="font-size:12px;color:#888;background:#fafafa;border-radius:8px;padding:10px;">💡 两款合计首发期销量超480万份，卡牌Roguelike在Steam 2026年的爆发势能显著。三国杀IP+卡牌Roguelike方向具备极强市场依据。</div>
+    </div>
+  </div>
+
+  <!-- 洞察2 -->
+  <div class="ins-card" style="background:#f8f9ff;border-left:4px solid #1976d2;margin-top:10px;">
+    <div class="ins-row">
+      <div class="ins-num" style="background:linear-gradient(135deg,#1976d2,#42a5f5);">2</div>
+      <div>
+        <div class="ins-title">重点关注发行商：三家各具差异化的独立发行方法论</div>
+      </div>
+    </div>
+    <div style="margin-top:12px;display:grid;gap:8px;">
+      <div style="background:#fff;border-radius:10px;padding:12px;border-top:3px solid #1976d2;">
+        <div style="font-size:11px;font-weight:700;color:#1976d2;margin-bottom:5px;">Oro Interactive（比利时）· "Catchy, creator-focused games"</div>
+        <div class="ins-sub">2月连发<b>宇宙牌加油站（24.4万）+ 超高尔夫（46.5万）</b>两款爆款。选品标准：①高动态视觉反馈 ②非线性意外素材 ③30秒内让新观众看懂玩法。</div>
+      </div>
+      <div style="background:#fff;border-radius:10px;padding:12px;border-top:3px solid #43a047;">
+        <div style="font-size:11px;font-weight:700;color:#43a047;margin-bottom:5px;">Hooded Horse（美国）</div>
+        <div class="ins-sub">发行威赫战线MENACE（19.4万），擅长硬核策略赛道，精品小众路线，口碑优先。</div>
+      </div>
+      <div style="background:#fff;border-radius:10px;padding:12px;border-top:3px solid #fb8c00;">
+        <div style="font-size:11px;font-weight:700;color:#fb8c00;margin-bottom:5px;">Gamirror Games（中国）</div>
+        <div class="ins-sub">本土独立发行商，B站/小红书深度运营。宇宙牌加油站国内热议第一，中文文案极具网感。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 洞察3 -->
+  <div class="ins-card" style="background:#fffbf5;border-left:4px solid #f57c00;margin-top:10px;">
+    <div class="ins-row">
+      <div class="ins-num" style="background:linear-gradient(135deg,#f57c00,#ffb300);">3</div>
+      <div>
+        <div class="ins-title">前期老游长期监控：1月重点新游持续增长 + 2月TCG老游PCU异动</div>
+      </div>
+    </div>
+    <div style="margin-top:12px;display:grid;gap:8px;">
+      <div style="background:#fff;border-radius:10px;padding:12px;border-left:4px solid var(--r);">
+        <div style="font-size:11px;font-weight:700;color:var(--r);margin-bottom:4px;">🎮 YAPYAP：45.7万 → 80万（+75%）</div>
+        <div class="ins-sub">国区占比从10.6%→9.6%，海外社交传播持续驱动，无公开配对模式是留存瓶颈。</div>
+      </div>
+      <div style="background:#fff;border-radius:10px;padding:12px;border-left:4px solid var(--r);">
+        <div style="font-size:11px;font-weight:700;color:var(--r);margin-bottom:4px;">⛰ 孤山独影 Cairn：31.6万 → 38.1万（+20.6%）</div>
+        <div class="ins-sub">国区占比+2.3ppt至15.9%，IGN 9分口碑长尾效应显著，攀岩动作品类国内认可度持续提升。</div>
+      </div>
+      <div style="background:#fff;border-radius:10px;padding:12px;border-left:4px solid #f57c00;">
+        <div style="font-size:11px;font-weight:700;color:#f57c00;margin-bottom:4px;">🀄 游戏王：大师决斗 PCU 53,798（+30.1%）</div>
+        <div class="ins-sub">4周年活动驱动回流，TCG品类对版本节点极度敏感——周年庆效果远超折扣促销。</div>
+      </div>
+      <div style="background:#fff;border-radius:10px;padding:12px;border-left:4px solid #1565c0;">
+        <div style="font-size:11px;font-weight:700;color:#1565c0;margin-bottom:4px;">🎴 影之诗：超越世界 PCU 44,303（新赛季上线）</div>
+        <div class="ins-sub">新赛季内容上线驱动PCU激增，与游戏王共同印证：<b>新内容发布 > 价格刺激</b>，版本节点是TCG长线运营的核心杠杆。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 洞察4 -->
+  <div class="ins-card" style="background:#f8fff9;border-left:4px solid #388e3c;margin-top:10px;">
+    <div class="ins-row">
+      <div class="ins-num" style="background:linear-gradient(135deg,#388e3c,#66bb6a);">4</div>
+      <div>
+        <div class="ins-title">业务角度重点可借鉴产品：两款设计机制直接对标游卡需求</div>
+      </div>
+    </div>
+    <div style="margin-top:12px;display:grid;gap:8px;">
+      <div style="background:#fff;border-radius:10px;padding:12px;border-left:4px solid #e53935;">
+        <div style="font-size:11px;font-weight:700;color:#e53935;margin-bottom:4px;">🔥 纵火游戏 ARSONATE — 三国杀限时模式角度</div>
+        <div class="ins-sub">「环境威胁」作为全局计时器的机制设计，可直接迁移为三国杀"烽火连城"限时模式——强制局内计时、避免磨局、增加空间策略维度。</div>
+      </div>
+      <div style="background:#fff;border-radius:10px;padding:12px;border-left:4px solid #7c3aed;">
+        <div style="font-size:11px;font-weight:700;color:#7c3aed;margin-bottom:4px;">👁 Perceptum — 数值卡牌世界观叙事角度</div>
+        <div class="ins-sub">「感知层断裂」制造认知恐惧而非视觉恐惧，无血腥内容且压迫感极强，符合国内合规。可为游卡二次元数值卡牌提供"双视角世界观+隐藏叙事线"产品设计框架。</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- METRICS -->
+<div class="metrics">
+  <div class="mc"><div class="ml">销量最高（已发售）</div><div class="mv">Slay the Spire 2</div><div class="ms">~300万份(首4天)</div></div>
+  <div class="mc"><div class="ml">国区占比最高</div><div class="mv">Slay the Spire 2</div><div class="ms">21.5% · 卡牌Roguelike</div></div>
+  <div class="mc"><div class="ml">愿望单最高（未发售）</div><div class="mv">Windrose</div><div class="ms">79万 · 海战生存建造</div></div>
+  <div class="mc"><div class="ml">近7日销量增长最快</div><div class="mv">Slay the Spire 2</div><div class="ms">+300万份 · 100%</div></div>
+  <div class="mc"><div class="ml">近7日愿望增长最快</div><div class="mv">沃德灵：共生</div><div class="ms">+1.5万 · +16.7%</div></div>
+</div>
+
+<!-- STS2 highlight bar -->
+<div class="sts2-bar">
+  <div style="font-size:10px;color:rgba(255,255,255,.45);margin-bottom:4px;letter-spacing:1.5px;text-transform:uppercase;">3月跨月最强首发</div>
+  <div class="sts2-title">🃏 Slay the Spire 2 · 杀戮尖塔2</div>
+  <div class="sts2-sub">Mega Crit · 卡牌Roguelike EA · 3月5日上线 · 95%好评率</div>
+  <div class="sts2-stats">
+    <div class="sts2-stat"><div class="sts2-val">57.4万</div><div class="sts2-label">首日PCU峰值</div></div>
+    <div class="sts2-stat"><div class="sts2-val">~300万</div><div class="sts2-label">首4天销量</div></div>
+    <div class="sts2-stat"><div class="sts2-val">174万</div><div class="sts2-label">发售前愿望单</div></div>
+  </div>
+</div>
+
+<!-- STAT HIGHLIGHTS -->
+<div class="stat-grid">
+  <div class="stat-card" style="border-left:5px solid #7c3aed;">
+    <div style="font-size:34px;font-weight:800;color:#7c3aed;font-family:'Noto Serif SC',serif;line-height:1.1;">57.4万</div>
+    <div style="font-size:13px;font-weight:700;color:var(--tx);margin:8px 0 6px;">Slay the Spire 2 首日PCU</div>
+    <div style="font-size:11.5px;color:var(--tl);line-height:1.7;">2026年Steam最强EA首发，超越RE Requiem 34.4万峰值</div>
+  </div>
+  <div class="stat-card" style="border-left:5px solid #1976d2;">
+    <div style="font-size:34px;font-weight:800;color:#1976d2;font-family:'Noto Serif SC',serif;line-height:1.1;">79万</div>
+    <div style="font-size:13px;font-weight:700;color:var(--tx);margin:8px 0 6px;">Windrose风启之旅愿望单</div>
+    <div style="font-size:11.5px;color:var(--tl);line-height:1.7;">小团队开放世界海战生存赛道的爆发信号</div>
+  </div>
+</div>
+
+<!-- SECTION 1: 数据概览 -->
+<div class="section">
+  <div class="sec-title">
+    <div class="sec-num">一</div>
+    <h2>数据概览与市场分析</h2>
+  </div>
+
+  <div class="sub-label">1.1 · 已发售产品销量排行</div>
+  <div class="data-table-simple">
+    <div class="dts-row">
+      <div><div class="dts-name">🥇 Slay the Spire 2</div><div class="dts-sub">国区21.5% · 首4天</div></div>
+      <div style="text-align:right"><div class="dts-val">~300万份</div><div style="font-size:10px;color:#16a34a;">↑ 2026最强EA首发</div></div>
+    </div>
+    <div class="dts-row">
+      <div><div class="dts-name">🥈 喵喵的结合</div><div class="dts-sub">国区11.1% · 首月</div></div>
+      <div style="text-align:right"><div class="dts-val">180万份</div><div style="font-size:10px;color:#16a34a;">↑+9.7万 近7日</div></div>
+    </div>
+    <div class="dts-row">
+      <div><div class="dts-name">🥉 超级高尔夫大乱斗</div><div class="dts-sub">国区低于1% · 首两周</div></div>
+      <div style="text-align:right"><div class="dts-val">46.5万份</div><div style="font-size:10px;color:#16a34a;">↑+13.4万 +29%</div></div>
+    </div>
+    <div class="dts-row">
+      <div><div class="dts-name">4️⃣ 宇宙牌加油站</div><div class="dts-sub">国区2.9% · 首月EA</div></div>
+      <div style="text-align:right"><div class="dts-val">24.4万份</div><div style="font-size:10px;color:#16a34a;">↑+4.4万 +18%</div></div>
+    </div>
+    <div class="dts-row">
+      <div><div class="dts-name">5️⃣ 威赫战线 MENACE</div><div class="dts-sub">国区9.7% · 策略战棋</div></div>
+      <div style="text-align:right"><div class="dts-val">19.4万份</div><div style="font-size:10px;color:#888;">上线首月</div></div>
+    </div>
+  </div>
+
+  <div class="sub-label">1.2 · 未发售产品愿望单 TOP 10</div>
+  <div class="data-table-simple">
+    <div class="dts-row"><div><div class="dts-name">Windrose风启之旅</div><div class="dts-sub">海战生存建造</div></div><div class="dts-val">79万</div></div>
+    <div class="dts-row"><div><div class="dts-name">Big Walk</div><div class="dts-sub">公路旅行/徒步</div></div><div class="dts-val">56万</div></div>
+    <div class="dts-row"><div><div class="dts-name">Emberville</div><div class="dts-sub">—</div></div><div class="dts-val">18万</div></div>
+    <div class="dts-row"><div><div class="dts-name">失物招领有限公司</div><div class="dts-sub">治愈点击冒险</div></div><div class="dts-val">12万</div></div>
+    <div class="dts-row"><div><div class="dts-name">沃德灵：共生</div><div class="dts-sub">近7日↑+16.7%</div></div><div class="dts-val">9万</div></div>
+    <div class="dts-row"><div><div class="dts-name">I Have No Change</div><div class="dts-sub">—</div></div><div class="dts-val">8.7万</div></div>
+    <div class="dts-row"><div><div class="dts-name">Gang of Frogs</div><div class="dts-sub">—</div></div><div class="dts-val">6.2万</div></div>
+    <div class="dts-row"><div><div class="dts-name">Deep Snow Delivery</div><div class="dts-sub">—</div></div><div class="dts-val">4.7万</div></div>
+    <div class="dts-row"><div><div class="dts-name">ORMOD: Directive</div><div class="dts-sub">—</div></div><div class="dts-val">4.3万</div></div>
+    <div class="dts-row"><div><div class="dts-name">WheelMates双轮成行</div><div class="dts-sub">—</div></div><div class="dts-val">4.0万</div></div>
+  </div>
+
+  <div class="sub-label">1.3 · 产品竞争力矩阵</div>
+  <div class="matrix">
+    <div class="matrix-row">
+      <div class="matrix-cell">
+        <div class="matrix-cell-title" style="color:#388e3c;border-color:#388e3c;">⭐ 明星产品<br><span style="font-size:10px;font-weight:400;">高销量+高增速</span></div>
+        <div style="margin-bottom:8px;"><div style="font-size:13px;font-weight:700;color:var(--tx);">喵喵的结合</div><div style="font-size:11px;color:var(--tl);">180万 | +5% | 猫咪育种</div><div class="mini-badge" style="background:#e8f5e9;color:#388e3c;">现象级独立爆款</div></div>
+        <div style="margin-bottom:8px;"><div style="font-size:13px;font-weight:700;color:var(--tx);">超级高尔夫大乱斗</div><div style="font-size:11px;color:var(--tl);">46.5万 | +29% | 派对竞技</div><div class="mini-badge" style="background:#e3f2fd;color:#1976d2;">社交裂变模型</div></div>
+        <div><div style="font-size:13px;font-weight:700;color:#c9280d;">Slay the Spire 2 🆕</div><div style="font-size:11px;color:var(--tl);">~300万 | PCU57.4万</div><div class="mini-badge" style="background:#ffebee;color:#c9280d;">2026最强EA首发</div></div>
+      </div>
+      <div class="matrix-cell">
+        <div class="matrix-cell-title" style="color:#1976d2;border-color:#1976d2;">❓ 问题产品<br><span style="font-size:10px;font-weight:400;">低销量+高增速</span></div>
+        <div><div style="font-size:13px;font-weight:700;color:var(--tx);">宇宙牌加油站</div><div style="font-size:11px;color:var(--tl);">24.4万 | +18% | EA</div><div class="mini-badge" style="background:#e8f5e9;color:#388e3c;">EA期持续增长</div></div>
+      </div>
+    </div>
+    <div class="matrix-row">
+      <div class="matrix-cell">
+        <div class="matrix-cell-title" style="color:#f57c00;border-color:#f57c00;">💰 金牛产品<br><span style="font-size:10px;font-weight:400;">高销量+低增速</span></div>
+        <div class="matrix-cell p" style="font-size:11px;">本月已发售产品均处于上线首月，暂无明显金牛特征；持续关注喵喵的结合后续衰减节奏。</div>
+      </div>
+      <div class="matrix-cell">
+        <div class="matrix-cell-title" style="color:#9e9e9e;border-color:#9e9e9e;">🐕 瘦狗产品<br><span style="font-size:10px;font-weight:400;">低销量+低增速</span></div>
+        <div class="matrix-cell p" style="font-size:11px;">本月暂无明显瘦狗特征；威赫战线MENACE后续衰减节奏值得跟踪。</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION 2: 头部产品深度解析 -->
+<div class="section">
+  <div class="sec-title"><div class="sec-num">二</div><h2>头部产品深度解析</h2></div>
+  <p style="color:#999;font-size:12px;margin-bottom:16px;">Slay the Spire 2（3月EA跨月）· 2月已发售TOP3 · 待发售TOP2 · 设计参考产品 · <span style="color:#e53935;font-weight:600;">红色标记</span>为重点关注产品</p>
+
+  <!-- 1 STS2 -->
+  <div class="gc">
+    <div class="gc-header">
+      <div class="gc-rank-row">
+        <div class="rank r1">1</div>
+        <div class="gc-name">杀戮尖塔2 Slay the Spire 2 <span style="background:#ffebee;color:#b71c1c;font-size:10px;padding:2px 8px;border-radius:20px;font-weight:700;">🆕 跨月首发</span></div>
+      </div>
+      <div class="tags"><span class="tag">卡牌Roguelike</span><span class="tag">Early Access</span><span class="tag n">Mega Crit 自研自发</span><span class="tag n">3月5日上线</span></div>
+    </div>
+    <div class="gc-stats">
+      <div class="sc"><div class="sv" style="color:#e53935;-webkit-text-fill-color:#e53935;">~300万</div><div class="sl">首4天销量</div><div class="sg">2026最强EA首发</div></div>
+      <div class="sc"><div class="sv">57.4万</div><div class="sl">PCU峰值</div></div>
+      <div class="sc"><div class="sv">95%</div><div class="sl">好评率</div></div>
+    </div>
+    <div class="gc-body">
+      <div class="db"><h4>核心玩法</h4><p>西幻题材肉鸽爬塔 + DBG卡牌对战，是奠定Roguelike卡牌品类的《杀戮尖塔》续作。新增四人联机模式：路线选择少数服从多数投票，怪物强度与玩家人数挂钩，战利品可抢，营火回复时可恢复队友血量。</p></div>
+      <div class="db"><h4>主要新增内容</h4>
+        <ul>
+          <li><span class="hr">多人联机（1-4人）：</span>至多四位玩家共开爬塔，路线投票、全体DEBUFF共享、<span class="hb">战斗策略更加复杂</span>，死亡角色可1血复活</li>
+          <li><span class="hr">扩展内容体量：</span>旧角色卡牌/遗物大量调整，<span class="hb">怪物完全重制</span>，BOSS奖励系统重做，随机事件隐藏故事线</li>
+          <li><span class="hr">可视化成就系统：</span>集成创意工坊工具，解锁系统与世界观故事线深度关联</li>
+        </ul>
+      </div>
+      <div class="db"><h4>首发数据</h4><p>EA版2026年3月5日上线；PCU峰值<span class="hn">57.4万</span>，超越原作历史峰值3倍；好评率95%，简中测评占总评<span class="hn">19.6%</span>，愿望单174.2万。为2026年最强EA首发，超越同期RE Requiem（34.4万）。</p></div>
+    </div>
+  </div>
+
+  <!-- 2 喵喵的结合 -->
+  <div class="gc">
+    <div class="gc-header">
+      <div class="gc-rank-row">
+        <div class="rank r2">2</div>
+        <div class="gc-name">喵喵的结合 Mewgenics <span style="background:#ffebee;color:#b71c1c;font-size:10px;padding:2px 8px;border-radius:20px;font-weight:700;">🔴 重点关注</span></div>
+      </div>
+      <div class="tags"><span class="tag">猫咪育种Roguelike</span><span class="tag">自研自发</span><span class="tag n">Edmund McMillen</span><span class="tag n">2月10日上线</span></div>
+    </div>
+    <div class="gc-stats">
+      <div class="sc"><div class="sv">180万</div><div class="sl">总销量</div><div class="sg">↑+9.7万</div></div>
+      <div class="sc"><div class="sv">11.1%</div><div class="sl">国区占比</div></div>
+      <div class="sc"><div class="sv">96%</div><div class="sl">好评率</div></div>
+    </div>
+    <div class="gc-body">
+      <div class="db"><h4>核心玩法</h4><p>玩家建立并管理一支猫咪军团，通过<b>战略性交配将技能、属性与基因突变传递给后代</b>，再带领进化后的猫咪深入程序生成地牢战斗。每只猫可装备职业领环，技能体系超过1000种。核心loop：培育→出征→传承→再培育。</p></div>
+      <div class="db"><h4>三大爆款关键因素</h4>
+        <ul>
+          <li><span class="hr">强IP积累：</span>78%买家来自《以撒的结合：重生》老玩家群体，<span class="hb">13年期待一朝兑现</span></li>
+          <li><span class="hr">机制孤品：</span>遗传模拟 × 策略Roguelike融合，市场上<span class="hb">无直接竞品</span>，200小时体量支撑持续传播</li>
+          <li><span class="hr">营销自然裂变：</span>玩家自发分享"猫咪进化谱系"截图，<span class="hb">UGC内容自我驱动</span>成为最强获客渠道</li>
+        </ul>
+      </div>
+      <div class="db"><h4>商业数据</h4><p>首发12小时销量<span class="hn">25万套</span>，3小时回收全部开发成本。首周突破<span class="hn">100万套</span>，Steam历史PCU<span class="hn">115,428人</span>，超越《哈迪斯2》首发峰值。首发定价$29.99。</p></div>
+    </div>
+  </div>
+
+  <!-- 3 超级高尔夫 -->
+  <div class="gc">
+    <div class="gc-header">
+      <div class="gc-rank-row">
+        <div class="rank r3">3</div>
+        <div class="gc-name">超级高尔夫大乱斗 Super Battle Golf <span style="background:#ffebee;color:#b71c1c;font-size:10px;padding:2px 8px;border-radius:20px;font-weight:700;">🔴 重点关注</span></div>
+      </div>
+      <div class="tags"><span class="tag">派对竞技</span><span class="tag">签约发行</span><span class="tag n">Oro Interactive发行</span><span class="tag n">2月19日上线</span></div>
+    </div>
+    <div class="gc-stats">
+      <div class="sc"><div class="sv">46.5万</div><div class="sl">总销量</div><div class="sg">↑ 强势首发</div></div>
+      <div class="sc"><div class="sv">低于1%</div><div class="sl">国区占比</div></div>
+      <div class="sc"><div class="sv">97%</div><div class="sl">好评率</div></div>
+    </div>
+    <div class="gc-body">
+      <div class="db"><h4>核心玩法</h4><p>最多8人同时竞技的实时高尔夫游戏，<b>所有玩家同时击球而非轮流</b>，率先入洞胜出。拥有10种道具可用于干扰对手，融合派对乱斗与竞速逻辑，27张地图横跨3种生态。</p></div>
+      <div class="db"><h4>三大玩法亮点</h4>
+        <ul>
+          <li><span class="hr">零学习成本社交核：</span>高尔夫人人懂，<span class="hb">道具互相破坏的混乱感</span>天然生成传播素材</li>
+          <li><span class="hr">实时同场竞技：</span>打破传统高尔夫回合制，节奏快、<span class="hb">直播友好度极高</span></li>
+          <li><span class="hr">定价亲民：</span>首发$7.99，<span class="hb">低门槛冲动购买</span>推动48小时破10万销量</li>
+        </ul>
+      </div>
+      <div class="db"><h4>Oro Interactive发行分析</h4><p>Oro Interactive自称"<span class="hb">Vibes based publisher</span>"，2月连续发行本作与宇宙牌加油站，两款均爆。选品标准：<span class="hr">极简题材概念 + 多人社交核心 + 极低上手门槛</span>。</p></div>
+    </div>
+  </div>
+
+  <!-- 4 宇宙牌加油站 -->
+  <div class="gc">
+    <div class="gc-header">
+      <div class="gc-rank-row">
+        <div class="rank r4">4</div>
+        <div class="gc-name">宇宙牌加油站 Roadside Research <span style="background:#ffebee;color:#b71c1c;font-size:10px;padding:2px 8px;border-radius:20px;font-weight:700;">🔴 重点关注</span></div>
+      </div>
+      <div class="tags"><span class="tag">经营模拟</span><span class="tag">EA</span><span class="tag">签约发行</span><span class="tag n">Oro Interactive</span><span class="tag n">2月12日上线</span></div>
+    </div>
+    <div class="gc-stats">
+      <div class="sc"><div class="sv">24.4万</div><div class="sl">总销量</div><div class="sg">↑+4.4万</div></div>
+      <div class="sc"><div class="sv">2.9%</div><div class="sl">国区占比</div></div>
+      <div class="sc"><div class="sv">EA期</div><div class="sl">上线首月</div></div>
+    </div>
+    <div class="gc-body">
+      <div class="db"><h4>核心玩法</h4><p>1-4人合作经营模拟，扮演<b>伪装成人类的外星人</b>，白天经营加油站，晚上执行"研究人类"KPI。核心张力：<span class="hb">保持营收 vs 控制"怀疑指数"</span>。怀疑指数爆表则触发黑衣人追查。</p></div>
+      <div class="db"><h4>国区特殊现象</h4><p>Steam中文界面、QQ频道、B站、小红书全线运营。<span class="hb">游戏文案极具网感</span>（"摸鱼可以，千万别露馅"），与国内互联网文化高度契合，形成显著本土化传播优势。</p></div>
+    </div>
+  </div>
+
+  <!-- 5 ARSONATE -->
+  <div class="gc">
+    <div class="gc-header">
+      <div class="gc-rank-row">
+        <div class="rank focus-r">5</div>
+        <div class="gc-name">纵火游戏 ARSONATE <span style="background:#ffebee;color:#b71c1c;font-size:10px;padding:2px 8px;border-radius:20px;font-weight:700;">🔴 三国杀设计参考</span></div>
+      </div>
+      <div class="tags"><span class="tag focus-tag">玩法机制参考</span><span class="tag">待发售</span><span class="tag n">Nash独立开发 · 愿望单2.3万</span></div>
+    </div>
+    <div class="gc-stats">
+      <div class="sc"><div class="sv">2.3万</div><div class="sl">愿望单</div><div class="sg">Reddit热门帖驱动</div></div>
+      <div class="sc"><div class="sv">0.0%</div><div class="sl">近7日新增</div></div>
+      <div class="sc"><div class="sv">待发售</div><div class="sl">3月上线</div></div>
+    </div>
+    <div class="gc-body">
+      <div class="db"><h4>核心玩法机制</h4><p>第一人称卡牌策略。双方各有一座瞭望塔，洗牌后牌面朝下铺在桌上模拟森林，每回合必须翻开一张让火势蔓延。当任意瞭望塔被翻开，游戏结束——被烧者输。道具包括斧头、望远镜、水桶、铁撬、纵火罐。</p></div>
+      <div class="db"><h4>机制创新亮点</h4>
+        <ul>
+          <li><span class="hr">环境威胁驱动：</span>火势是<span class="hb">双方共同面对的环境威胁</span>，策略在于"让对方先被烧到"</li>
+          <li><span class="hr">信息不对称博弈：</span>牌面朝下状态记忆 + 道具时机 = <span class="hb">类似德扑的心理博弈层</span></li>
+          <li><span class="hr">极简规则深度无限：</span>与Buckshot Roulette同源设计哲学</li>
+        </ul>
+      </div>
+      <div class="db"><h4>市场信号</h4><p>Reddit热门帖起源，获Rock Paper Shotgun、80 Level等媒体报道。Pirate Software Game Jam第一名，<span class="hr">以极低成本验证了机制吸引力</span>。</p></div>
+    </div>
+  </div>
+
+  <!-- 6 Perceptum -->
+  <div class="gc">
+    <div class="gc-header">
+      <div class="gc-rank-row">
+        <div class="rank r6">6</div>
+        <div class="gc-name">Perceptum · 灵媒心理恐怖解谜 <span style="background:#ffebee;color:#b71c1c;font-size:10px;padding:2px 8px;border-radius:20px;font-weight:700;">🔴 叙事设计参考</span></div>
+      </div>
+      <div class="tags"><span class="tag focus-tag">世界观叙事参考</span><span class="tag">待发售</span><span class="tag n">Duck Reaction · 两人工作室</span></div>
+    </div>
+    <div class="gc-stats">
+      <div class="sc"><div class="sv">2.4万</div><div class="sl">愿望单</div><div class="sg">↑+0.15万 7日</div></div>
+      <div class="sc"><div class="sv">+6.3%</div><div class="sl">7日增速</div></div>
+      <div class="sc"><div class="sv">待发售</div><div class="sl">—</div></div>
+    </div>
+    <div class="gc-body">
+      <div class="db"><h4>核心玩法体验</h4><p>约3小时线性心理恐怖游戏，扮演灵媒调查失踪家庭。①<b>闭眼机制</b>——闭眼才能听见彼岸声音，获取线索；②<b>怀表镜面机制</b>——举起怀表才能看见正常视野中不存在的异形/恶魔。</p></div>
+      <div class="db"><h4>感知叙事设计价值</h4>
+        <ul>
+          <li><span class="hr">感知替换恐惧：</span>以"你看到/听到的与现实不同"制造恐惧，<span class="hb">无血腥画面但压迫感极强</span>，符合国内合规</li>
+          <li><span class="hr">主动投入恐惧：</span>需主动举起镜子/闭眼才触发恐怖内容，<span class="hb">情感控制权在玩家手中</span></li>
+          <li><span class="hr">PT公式进化版：</span>业界评为"有望超越Hideo Kojima P.T.的独立游戏"</li>
+        </ul>
+      </div>
+      <div class="db"><h4>工作室背景</h4><p>两人工作室Duck Reaction出品，零预算依靠TikTok+Threads传播成功出圈。<span class="hb">证明小体量恐怖叙事类游戏在Steam的商业价值</span>，是游卡评估恐怖/悬疑叙事品类市场潜力的参考样本。</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION 3: 业务借鉴 -->
+<div class="section">
+  <div class="sec-title"><div class="sec-num">三</div><h2>业务借鉴思路参考</h2></div>
+
+  <div class="ins-h3">1. Oro Interactive专题——感知驱动发行商的方法论拆解 <span style="font-size:11px;font-weight:500;color:#1976d2;">【发行业务团队建议关注】</span></div>
+
+  <div class="sub-label" style="margin-top:0;">Oro Interactive 代表产品</div>
+  <div class="tw">
+    <div class="tw-hint">← 左右滑动查看完整表格</div>
+    <table class="ct">
+      <thead><tr><th>产品</th><th>上线时间</th><th>核心概念</th><th>销量数据</th><th>共同特征</th></tr></thead>
+      <tbody>
+        <tr><td><strong>宇宙牌加油站</strong></td><td>2026/2/12 EA</td><td>外星人伪装经营加油站</td><td class="num">24.4万份</td><td>一句话说清</td></tr>
+        <tr><td><strong>超级高尔夫大乱斗</strong></td><td>2026/2/19</td><td>8人实时同场高尔夫</td><td class="num">46.5万份</td><td>多人社交核</td></tr>
+        <tr><td><strong>Easy Delivery Co.</strong></td><td>2025/9</td><td>山间小镇放松驾驶配送</td><td>已验证口碑</td><td>低门槛入手</td></tr>
+        <tr><td><strong>Card Clicker</strong></td><td>2025/12</td><td>卡牌翻转赚钱放置游戏</td><td>已验证口碑</td><td>概念趣味性强</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="ibox">
+    <h4><span class="dot"></span>Oro Interactive 核心方法论：主播适配性选品标准</h4>
+    <p style="font-size:12px;color:#666;margin-bottom:12px;">Slogan：<span class="hb">"Catchy, creator-focused games"</span>——以内容创作者为中心，选品时执行严苛的主播适配性审查。</p>
+    <div style="display:grid;gap:8px;">
+      <div style="background:#fff;border-radius:9px;padding:12px;border-top:3px solid var(--r);"><div style="font-size:11px;font-weight:700;color:var(--r);margin-bottom:5px;">① 高动态视觉反馈</div><p style="font-size:12px;color:#4a4e70;line-height:1.7;"><span class="hb">不看UI也能看懂发生了什么</span>——超高尔夫的物理碰撞与爆炸效果，即使静音观看也清晰传达了比赛张力。</p></div>
+      <div style="background:#fff;border-radius:9px;padding:12px;border-top:3px solid #f57c00;"><div style="font-size:11px;font-weight:700;color:#f57c00;margin-bottom:5px;">② 非线性意外时刻</div><p style="font-size:12px;color:#4a4e70;line-height:1.7;">物理引擎或多人互动产生<span class="hb">不可预见的"翻车"或"神操作"</span>——这是主播最需要的 Clip 素材。</p></div>
+      <div style="background:#fff;border-radius:9px;padding:12px;border-top:3px solid #1976d2;"><div style="font-size:11px;font-weight:700;color:#1976d2;margin-bottom:5px;">③ 30秒观众看懂</div><p style="font-size:12px;color:#4a4e70;line-height:1.7;">核心玩法必须在<span class="hb">30秒内让新进直播间的观众看懂</span>，最大化主播带货转化效率。</p></div>
+    </div>
+  </div>
+
+  <div class="ibox">
+    <h4><span class="dot"></span>对游卡发行业务的参考价值</h4>
+    <p>本质是<span class="hb">以内容分发效率为选品标准</span>，而非以题材赛道或画面品质为核心。最具参考价值的两个操作动作：<strong class="hr">① 建立"主播适配性"评估清单</strong>——在项目评审时加入"30秒能看懂吗""能产生Clip素材吗"两个硬指标；<strong class="hr">② 构建创作者信任关系网络</strong>——优先与"好播且涨粉"的口碑在主播圈层中扩散，形成自增强的内容分发飞轮。</p>
+  </div>
+
+  <div class="ins-h3">2. 纵火游戏ARSONATE——「烽火连城」限时模式设想 <span style="font-size:11px;font-weight:500;color:#388e3c;">【三国杀限时模式角度关注】</span></div>
+
+  <div class="ibox">
+    <h4><span class="dot"></span>ARSONATE机制核心提炼</h4>
+    <p>ARSONATE的本质是将"<span class="hb">死亡倒计时</span>"具象化为棋盘上的火势蔓延——每回合必须翻一张牌，玩家无法阻止游戏走向终局，只能<span class="hr">控制火势在哪里蔓延、延缓它烧到自己</span>。道具的作用是"改变火势路径"而非"灭火"，制造了独特的<span class="hb">被动防守 × 主动破坏</span>双层策略。</p>
+  </div>
+
+  <div style="background:linear-gradient(135deg,rgba(255,80,53,.03),rgba(255,140,66,.02));border-radius:12px;padding:16px;border:1.5px solid var(--rm);margin-bottom:14px;">
+    <div style="font-size:14px;font-weight:700;color:var(--r);margin-bottom:14px;">📋 三国杀新玩法设想：「烽火连城」</div>
+    <div style="display:grid;gap:10px;">
+      <div style="background:#fff;border-radius:9px;padding:14px;border-left:4px solid var(--r);">
+        <div style="font-size:13px;font-weight:700;margin-bottom:6px;">① 核心机制移植</div>
+        <p style="font-size:12px;color:var(--tx);line-height:1.75;">棋盘上预置若干面朝下的「军情牌」，每回合必须翻开一张。牌的类型包括：援军、粮草、陷阱、<strong style="color:var(--r);">烽火</strong>（核心威胁，点燃后向周围蔓延，到达本营即失败）。玩家在"推进进攻"与"控制烽火路径"之间做出选择。</p>
+      </div>
+      <div style="background:#fff;border-radius:9px;padding:14px;border-left:4px solid #f57c00;">
+        <div style="font-size:13px;font-weight:700;margin-bottom:6px;">② 武将技能设计方向</div>
+        <p style="font-size:12px;color:var(--tx);line-height:1.75;"><strong>诸葛亮·空城</strong>（提前看一张军情牌）；<strong>庞统·连环</strong>（将烽火蔓延方向偏转至对方路线）；<strong>周瑜·火攻</strong>（主动引燃敌方区域牌）；<strong>司马懿·反噬</strong>（烽火即将抵达时反向引导蔓延）。武将技能与"烽火"机制深度绑定。</p>
+      </div>
+      <div style="background:#fff;border-radius:9px;padding:14px;border-left:4px solid #388e3c;">
+        <div style="font-size:13px;font-weight:700;margin-bottom:6px;">③ 差异化设计价值</div>
+        <p style="font-size:12px;color:var(--tx);line-height:1.75;"><strong>解决磨局问题：</strong>烽火作为"全局计时器"机制，强制每局游戏在有限时间内结束。<strong>增加决策厚度：</strong>翻牌时机 + 烽火路径空间预判，在手牌博弈之外增加一维策略。<strong>短视频传播：</strong>"险些被烽火烧到但最后逆转"的戏剧性时刻天然适合传播。</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="ins-h3">3. Perceptum感知叙事——数值卡牌世界观叙事框架参考 <span style="font-size:11px;font-weight:500;color:#7c3aed;">【数值卡牌叙事角度关注】</span></div>
+
+  <div class="ibox">
+    <h4><span class="dot"></span>移植到二次元数值卡牌的设计框架</h4>
+    <div style="display:grid;gap:8px;margin-top:8px;">
+      <div style="background:#fff;border-radius:9px;padding:12px;border-left:4px solid var(--r);"><div style="font-size:12px;font-weight:700;color:var(--tx);margin-bottom:5px;">🌐 世界观层面</div><p style="font-size:12px;color:#4a4e70;line-height:1.75;">设定双重现实世界——玩家切换"凡界视角"与"异界视角"。主角是唯一能在两个视角间切换的人，这赋予了她独特的战略价值（也是她被追杀的原因）。</p></div>
+      <div style="background:#fff;border-radius:9px;padding:12px;border-left:4px solid #7c3aed;"><div style="font-size:12px;font-weight:700;color:var(--tx);margin-bottom:5px;">🎴 卡牌机制层面</div><p style="font-size:12px;color:#4a4e70;line-height:1.75;">引入"感知层"状态标签——部分卡牌有双面效果：凡界版本（普通数值）和异界版本（强化效果+触发隐藏叙事线索），消耗"感知值"资源激活异界视角。</p></div>
+      <div style="background:#fff;border-radius:9px;padding:12px;border-left:4px solid #1976d2;"><div style="font-size:12px;font-weight:700;color:var(--tx);margin-bottom:5px;">📱 视觉表现层面</div><p style="font-size:12px;color:#4a4e70;line-height:1.75;">激活异界视角时界面美术风格发生"污染"——色调转冷、线条扭曲。<span class="hb">不需要血腥内容</span>，完全符合国内游戏合规要求。</p></div>
+      <div style="background:#fff;border-radius:9px;padding:12px;border-left:4px solid #388e3c;"><div style="font-size:12px;font-weight:700;color:var(--tx);margin-bottom:5px;">📖 叙事推进层面</div><p style="font-size:12px;color:#4a4e70;line-height:1.75;">每次在异界视角下赢得战斗，解锁一段"异界记忆"剧情碎片，逐步拼凑出主角真实身份与世界真相。<span class="hb">悬疑 + 解锁感</span>驱动用户留存。</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION 4: 发行商 -->
+<div class="section">
+  <div class="sec-title"><div class="sec-num">四</div><h2>本月重点关注发行商</h2></div>
+  <p style="color:var(--tl);font-size:12.5px;margin-bottom:16px;line-height:1.8;">本月共追踪 3 家核心发行商，合计贡献已发售产品中 <strong>4款</strong>，覆盖海外独立派对竞技、策略战术及国内治愈休闲三大赛道。</p>
+
+  <!-- Oro Interactive -->
+  <div class="pub-card">
+    <div class="pub-header">
+      <div class="pub-icon" style="background:linear-gradient(135deg,#ff5035,#ff8c42);box-shadow:0 4px 14px rgba(255,80,53,.35);">
+        <svg width="28" height="28" viewBox="0 0 34 34" fill="none"><circle cx="17" cy="17" r="12" stroke="rgba(255,255,255,.9)" stroke-width="2" fill="none"/><circle cx="17" cy="17" r="7" stroke="rgba(255,255,255,.6)" stroke-width="1.5" fill="none"/><circle cx="17" cy="17" r="3" fill="white"/><line x1="17" y1="5" x2="17" y2="9" stroke="white" stroke-width="2" stroke-linecap="round"/><line x1="17" y1="25" x2="17" y2="29" stroke="white" stroke-width="2" stroke-linecap="round"/><line x1="5" y1="17" x2="9" y2="17" stroke="white" stroke-width="2" stroke-linecap="round"/><line x1="25" y1="17" x2="29" y2="17" stroke="white" stroke-width="2" stroke-linecap="round"/></svg>
+      </div>
+      <div><div class="pub-name">Oro Interactive</div><div class="pub-sub">🌍 比利时 · 海外独立发行商</div></div>
+    </div>
+    <div class="pub-desc">自称"Vibes based publisher（感知驱动型发行商）"，专注10秒内能让人"get到乐趣"的派对向/创意向小体量独立游戏。以快速、透明、开发者友好著称，提供最高10万美元开发资金+全方位发行支持。</div>
+    <div class="pub-tags">
+      <span class="pub-tag" style="background:var(--rl);color:var(--r);">感知驱动选品</span>
+      <span class="pub-tag" style="background:#e3f2fd;color:#1565c0;">社交裂变优先</span>
+      <span class="pub-tag" style="background:#f3e5f5;color:#7b1fa2;">轻量高频矩阵</span>
+    </div>
+    <div style="border-top:1px solid var(--br);padding-top:12px;">
+      <div style="font-size:10.5px;font-weight:700;color:var(--tl);letter-spacing:.8px;text-transform:uppercase;margin-bottom:8px;">本月关注产品</div>
+      <div class="pub-game"><div class="pub-game-name">⛳ 超级高尔夫大乱斗</div><div class="pub-game-num">46.5万</div></div>
+      <div class="pub-game"><div class="pub-game-name">🛸 宇宙牌加油站</div><div class="pub-game-num">24.4万</div></div>
+      <div style="margin-top:8px;font-size:11.5px;color:var(--tl);background:#fafafa;border-radius:8px;padding:8px 10px;">📌 2月连续双爆款，合计 <strong style="color:var(--r)">70.9万</strong> 销量，验证"感知驱动"选品方法论。</div>
+    </div>
+  </div>
+
+  <!-- Hooded Horse -->
+  <div class="pub-card">
+    <div class="pub-header">
+      <div class="pub-icon" style="background:linear-gradient(135deg,#1e3a5f,#2e6da4);box-shadow:0 4px 14px rgba(30,58,95,.4);">
+        <svg width="28" height="28" viewBox="0 0 34 34" fill="none"><path d="M17 6 C14 6 11 8 10 11 L9 15 L8 18 L10 22 L14 26 L17 28 L20 26 L24 22 L26 18 L25 15 L24 11 C23 8 20 6 17 6Z" stroke="rgba(255,255,255,.85)" stroke-width="1.8" fill="rgba(255,255,255,.12)"/><path d="M13 12 L13 18 M17 10 L17 18 M21 12 L21 18" stroke="rgba(255,255,255,.7)" stroke-width="1.5" stroke-linecap="round"/><rect x="12" y="19" width="10" height="5" rx="2.5" fill="rgba(255,255,255,.8)"/><circle cx="17" cy="8" r="2" fill="rgba(255,255,255,.5)"/></svg>
+      </div>
+      <div><div class="pub-name">Hooded Horse</div><div class="pub-sub">🌍 美国达拉斯 · 策略游戏专项发行商</div></div>
+    </div>
+    <div class="pub-desc">成立于2019年，专注深度策略/战术类游戏发行，代表作含《庄园领主》《暗雨》《旧世界》《九王》。开发者可保留65%收益，每个项目保底提供不少于10万美元本地化+营销预算。</div>
+    <div class="pub-tags">
+      <span class="pub-tag" style="background:#e8f5e9;color:#388e3c;">策略赛道专精</span>
+      <span class="pub-tag" style="background:#e3f2fd;color:#1565c0;">开发者友好条款</span>
+      <span class="pub-tag" style="background:#fff8e1;color:#f57f17;">爆款率极高</span>
+    </div>
+    <div style="border-top:1px solid var(--br);padding-top:12px;">
+      <div style="font-size:10.5px;font-weight:700;color:var(--tl);letter-spacing:.8px;text-transform:uppercase;margin-bottom:8px;">本月关注产品</div>
+      <div style="display:flex;justify-content:space-between;align-items:center;background:#f0f4ff;border-radius:9px;padding:8px 12px;">
+        <div class="pub-game-name">⚔️ 威赫战线 MENACE</div>
+        <div style="font-size:13px;font-weight:800;color:#1565c0;">19.4万</div>
+      </div>
+      <div style="margin-top:8px;font-size:11.5px;color:var(--tl);background:#fafafa;border-radius:8px;padding:8px 10px;">📌 继2025年《九王》（首月40万）后，在回合制战术赛道维持强稳定性，国区占比9.7%。</div>
+    </div>
+  </div>
+
+  <!-- Gamirror Games -->
+  <div class="pub-card">
+    <div class="pub-header">
+      <div class="pub-icon" style="background:linear-gradient(135deg,#c0392b,#e74c3c);box-shadow:0 4px 14px rgba(192,57,43,.4);">
+        <svg width="28" height="28" viewBox="0 0 34 34" fill="none"><rect x="8" y="7" width="18" height="20" rx="3" stroke="rgba(255,255,255,.9)" stroke-width="1.8" fill="rgba(255,255,255,.1)"/><line x1="8" y1="17" x2="26" y2="17" stroke="rgba(255,255,255,.6)" stroke-width="1.2" stroke-dasharray="2 2"/><path d="M12 12 Q17 15 22 12" stroke="rgba(255,255,255,.7)" stroke-width="1.5" fill="none" stroke-linecap="round"/><path d="M12 22 Q17 19 22 22" stroke="rgba(255,255,255,.7)" stroke-width="1.5" fill="none" stroke-linecap="round"/><circle cx="17" cy="7" r="2.5" fill="rgba(255,255,255,.7)"/><circle cx="17" cy="27" r="2.5" fill="rgba(255,255,255,.7)"/></svg>
+      </div>
+      <div><div class="pub-name">Gamirror Games</div><div class="pub-sub">🇨🇳 上海 · 国内头部独立游戏发行商</div></div>
+    </div>
+    <div class="pub-desc">前身为Gamera Games（2018年成立），2025年4月更名Gamirror Games。代表作含《戴森球计划》《烟火》《三伏》《了不起的修仙模拟器》，有"阴间发行商"美誉。鹰角网络参股，设有面向微小团队的"叶绿素计划"（销量破万前0分成）。</div>
+    <div class="pub-tags">
+      <span class="pub-tag" style="background:#fff3e0;color:#e65100;">国产独立游戏专精</span>
+      <span class="pub-tag" style="background:#f3e5f5;color:#7b1fa2;">叶绿素扶持计划</span>
+      <span class="pub-tag" style="background:#e8f5e9;color:#388e3c;">阴间题材擅长</span>
+    </div>
+    <div style="border-top:1px solid var(--br);padding-top:12px;">
+      <div style="font-size:10.5px;font-weight:700;color:var(--tl);letter-spacing:.8px;text-transform:uppercase;margin-bottom:8px;">本月关注产品</div>
+      <div style="display:flex;justify-content:space-between;align-items:center;background:#fff4f2;border-radius:9px;padding:8px 12px;">
+        <div class="pub-game-name">🔍 失物招领有限公司</div>
+        <div style="font-size:11.5px;font-weight:700;color:#999;">待发售 · 12万愿望单</div>
+      </div>
+      <div style="margin-top:8px;font-size:11.5px;color:var(--tl);background:#fafafa;border-radius:8px;padding:8px 10px;">📌 泰国团队开发，治愈点击冒险+隐藏物体玩法，Gamirror在国际化布局上的新尝试。</div>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION 5: 上月重点产品持续追踪 -->
+<div class="section">
+  <div class="sec-title"><div class="sec-num">五</div><h2>上月重点产品持续追踪</h2></div>
+  <p style="color:#999;font-size:12px;margin-bottom:16px;">对1月报告重点关注产品进行跨月热度监控，统计截止 <b style="color:var(--tx)">2026/3/9</b></p>
+
+  <div class="sub-label">5.1 · 销量热度追踪（双快照对比）</div>
+
+  <!-- YAPYAP -->
+  <div class="track-card">
+    <div class="track-header">
+      <div class="track-icon" style="background:linear-gradient(135deg,#1a1a2e,#ff5722);">🧙</div>
+      <div>
+        <div class="track-name">YAPYAP</div>
+        <div class="track-meta">Maison Bap · 2026/2/4 · $9.99 · 合作恐怖</div>
+      </div>
+    </div>
+    <div class="track-snapshots">
+      <div class="snap" style="background:#f8f9fc;">
+        <div class="snap-date" style="color:var(--tl);">📅 2026/2/13 快照</div>
+        <div class="snap-num" style="color:var(--tx);">45.7</div>
+        <div class="snap-unit">万份</div>
+        <div class="snap-ratio">国区占比 <b>10.6%</b></div>
+      </div>
+      <div class="snap" style="background:linear-gradient(135deg,#fff4f2,#fff8f0);border:1.5px solid var(--rm);">
+        <div class="snap-date" style="color:var(--r);">📅 2026/3/9 快照</div>
+        <div class="snap-num" style="color:var(--r);">80</div>
+        <div class="snap-unit">万份</div>
+        <div class="snap-ratio">国区占比 <b style="color:var(--r);">9.6%</b></div>
+      </div>
+    </div>
+    <div class="track-growth">
+      <span style="font-size:12px;color:var(--tl);">一个月增幅</span>
+      <span style="font-size:17px;font-weight:800;color:#388e3c;">+34.3万 <span style="font-size:12px;">↑75%</span></span>
+    </div>
+    <div class="track-body"><b style="color:var(--tx);">增长驱动：</b>玩家群与CS2/PEAK高度重叠（73%+），典型"友人局"传播链。近期玩家评论指出"语音施法创意极佳但无公开配对，无好友劝退"——<b>内容增量依赖开发者更新节奏</b>。国区占比小幅下滑，增量以海外社交传播为主驱动。</div>
+  </div>
+
+  <!-- 孤山独影 -->
+  <div class="track-card">
+    <div class="track-header">
+      <div class="track-icon" style="background:linear-gradient(135deg,#1b5e20,#43a047);">⛰️</div>
+      <div>
+        <div class="track-name">孤山独影 Cairn</div>
+        <div class="track-meta">The Game Bakers · 2026/1/30 · ¥97.2 · 生存攀岩</div>
+      </div>
+    </div>
+    <div class="track-snapshots">
+      <div class="snap" style="background:#f8f9fc;">
+        <div class="snap-date" style="color:var(--tl);">📅 2026/2/13 快照</div>
+        <div class="snap-num" style="color:var(--tx);">31.6</div>
+        <div class="snap-unit">万份</div>
+        <div class="snap-ratio">国区占比 <b>13.6%</b></div>
+      </div>
+      <div class="snap" style="background:linear-gradient(135deg,#f1f8e9,#f9fbe7);border:1.5px solid #c8e6c9;">
+        <div class="snap-date" style="color:#388e3c;">📅 2026/3/9 快照</div>
+        <div class="snap-num" style="color:#388e3c;">38.1</div>
+        <div class="snap-unit">万份</div>
+        <div class="snap-ratio">国区占比 <b style="color:#388e3c;">15.9%</b></div>
+      </div>
+    </div>
+    <div class="track-growth">
+      <span style="font-size:12px;color:var(--tl);">一个月增幅</span>
+      <span style="font-size:17px;font-weight:800;color:#388e3c;">+6.5万 <span style="font-size:12px;">↑20.6%</span></span>
+    </div>
+    <div class="track-body" style="border-left-color:#388e3c;"><b style="color:var(--tx);">增长驱动：</b>IGN 9分口碑长尾效应显著，国区玩家持续回流，攀岩动作品类在国内认可度持续提升。<b>🇨🇳 国区占比+2.3ppt，持续上升趋势</b>——显示游戏在国内玩家群中仍在自然增长传播。</div>
+  </div>
+
+  <div class="sub-label">5.2 · 2月PCU异动老游追踪</div>
+
+  <div class="pcu-card" style="border-left:4px solid #f57c00;">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px;">
+      <div><div class="pcu-name">🀄 游戏王：大师决斗</div><div class="pcu-sub">卡牌对战 · 4周年活动</div></div>
+      <div style="text-align:right;"><div class="pcu-num" style="color:#f57c00;">53,798</div><div style="font-size:10px;color:var(--tl);">2月PCU峰值</div></div>
+    </div>
+    <div class="pcu-badges"><span style="padding:3px 9px;background:#fef3c7;color:#d97706;border-radius:20px;font-size:10px;font-weight:700;">🆕 新进TOP100</span><span style="padding:3px 9px;background:#f0fdf4;color:#16a34a;border-radius:20px;font-size:10px;font-weight:700;">环比+30.1%</span></div>
+    <div class="pcu-desc"><b style="color:var(--tx);">驱动原因：</b>4周年活动（2月5日开启），活动对成熟卡牌游戏PCU的提振效应极为显著，+30%属于4年运营期的高质量回流。<b>TCG品类对版本节点极度敏感</b>，节日活动设计对三国杀题材产品的长线运营激励具有直接参考价值。</div>
+  </div>
+
+  <div class="pcu-card" style="border-left:4px solid #ec4899;">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px;">
+      <div><div class="pcu-name">🎮 波比的游戏时间</div><div class="pcu-sub">Poppy Playtime · 益智恐怖</div></div>
+      <div style="text-align:right;"><div class="pcu-num" style="color:#ec4899;">52,866</div><div style="font-size:10px;color:var(--tl);">2月PCU峰值</div></div>
+    </div>
+    <div class="pcu-badges"><span style="padding:3px 9px;background:#fce7f3;color:#be185d;border-radius:20px;font-size:10px;font-weight:700;">🆕 新进TOP100</span><span style="padding:3px 9px;background:#f0fdf4;color:#16a34a;border-radius:20px;font-size:10px;font-weight:700;">Steam全销量榜 #1</span></div>
+    <div class="pcu-desc"><b style="color:var(--tx);">驱动原因：</b>Chapter 5正式上线当月，当天迅速登上Steam全销售榜第一。<b>叙事游戏的"章节更新"是最强效的玩家回流机制</b>，远超常规折扣活动。</div>
+  </div>
+
+  <div class="pcu-card" style="border-left:4px solid #3b82f6;">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px;">
+      <div><div class="pcu-name">🎴 影之诗：超越世界</div><div class="pcu-sub">Shadowverse · 卡牌策略</div></div>
+      <div style="text-align:right;"><div class="pcu-num" style="color:#3b82f6;">44,303</div><div style="font-size:10px;color:var(--tl);">2月PCU峰值</div></div>
+    </div>
+    <div class="pcu-badges"><span style="padding:3px 9px;background:#dbeafe;color:#1d4ed8;border-radius:20px;font-size:10px;font-weight:700;">🆕 新进TOP100</span><span style="padding:3px 9px;background:#eff6ff;color:#3b82f6;border-radius:20px;font-size:10px;font-weight:700;">赛季新卡+梯队更新</span></div>
+    <div class="pcu-desc"><b style="color:var(--tx);">驱动原因：</b>2月发布赛季更新，最大PCU来源天梯赛季重置+竞技玩家回归登分活动。<b>赛季制卡牌游戏对PCU激励效果显著</b>，新赛季首周是峰值窗口。</div>
+  </div>
+
+  <div class="pcu-card" style="border-left:4px solid #8b5cf6;">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px;">
+      <div><div class="pcu-name">🌌 RimWorld边缘世界</div><div class="pcu-sub">殖民模拟/生存策略</div></div>
+      <div style="text-align:right;"><div class="pcu-num" style="color:#8b5cf6;">43,613</div><div style="font-size:10px;color:var(--tl);">2月PCU峰值</div></div>
+    </div>
+    <div class="pcu-badges"><span style="padding:3px 9px;background:#ede9fe;color:#6d28d9;border-radius:20px;font-size:10px;font-weight:700;">🆕 新进TOP100</span><span style="padding:3px 9px;background:#f5f3ff;color:#8b5cf6;border-radius:20px;font-size:10px;font-weight:700;">DLC复利效应+9.3%</span></div>
+    <div class="pcu-desc"><b style="color:var(--tx);">驱动原因：</b>从2020年起持续推出大型DLC（Royalty/Ideology/Biotech/Anomaly），2025年Odyssey DLC推动游戏创下历史最高在线人数。<b>持续DLC策略是长线留存的核心引擎</b>。</div>
+  </div>
+
+  <div style="font-size:12px;color:var(--tl);line-height:1.75;background:#fafbff;border-radius:10px;padding:12px;border:1px solid var(--br);">四款产品分属卡牌对战、叙事恐怖、策略卡牌、殖民模拟四个赛道，增长驱动分别为：<b>周年活动 / 章节更新 / 赛季重置 / DLC复利</b>——印证了优质存量游戏在版本节点上PCU激活能力强于纯粹折扣手段。对游卡同类产品的版本运营具有直接参考价值。</div>
+</div>
+
+<!-- SECTION 6: 产品监控全览表 -->
+<div class="section">
+  <div class="sec-title"><div class="sec-num">六</div><h2>产品监控全览表</h2></div>
+  <p style="color:#999;font-size:12px;margin-bottom:14px;">仅展示重点关注产品，共 6 款（已发售4款 · 未发售2款）</p>
+
+  <div class="sub-label">已发售重点产品（4款）</div>
+  <div class="tw">
+    <div class="tw-hint">← 左右滑动查看完整表格</div>
+    <table class="ct">
+      <thead>
+        <tr><th>游戏名</th><th>EA</th><th>发行商</th><th>上线时间</th><th>最新销量(万)</th><th>国区占比</th><th>近7日新增(万)</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Slay the Spire 2</strong></td><td>是(EA)</td><td>Mega Crit</td><td>2026/3/5</td><td class="num">~300</td><td>21.5%</td><td class="num">~300</td></tr>
+        <tr><td><strong>喵喵的结合</strong></td><td>是</td><td>Edmund McMillen</td><td>2026/2/10</td><td class="num">180.0</td><td>11.1%</td><td class="num">9.7</td></tr>
+        <tr><td><strong>超级高尔夫大乱斗</strong></td><td>否</td><td>Oro Interactive</td><td>2026/2/19</td><td class="num">46.5</td><td>低于1%</td><td class="num">13.4</td></tr>
+        <tr><td><strong>宇宙牌加油站</strong></td><td>是</td><td>Oro Interactive</td><td>2026/2/12</td><td class="num">24.4</td><td>2.9%</td><td class="num">4.4</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="sub-label">未发售重点产品（2款）</div>
+  <div class="tw">
+    <div class="tw-hint">← 左右滑动查看完整表格</div>
+    <table class="ct">
+      <thead>
+        <tr><th>游戏名</th><th>发行商</th><th>最新愿望单(万)</th><th>近7日新增(万)</th><th>近7日新增占比</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>纵火游戏 ARSONATE</strong><br><span style="font-size:10px;color:var(--tl);">三国杀设计参考</span></td><td>Nash</td><td class="num">2.3</td><td class="num">0</td><td>0.0%</td></tr>
+        <tr><td><strong>Perceptum</strong><br><span style="font-size:10px;color:var(--tl);">叙事设计参考</span></td><td>Duck Reaction</td><td class="num">2.4</td><td class="num">0.15</td><td>6.3%</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  <div class="footer-brand">游卡网络 · 战略分析组</div>
+  <div class="footer-sub">YOKAVERSE STRATEGY RESEARCH</div>
+  <div class="footer-tags">
+    <span class="fb-tag">三国杀</span>
+    <span class="fb-tag">卡牌游戏</span>
+    <span class="fb-tag">Steam监控</span>
+  </div>
+  <div class="footer-data">
+    数据来源：Steam DB · Gamalytic · SteamSpy<br>
+    B站 · TikTok · Reddit · YouTube<br>
+    GameRant · PC Gamer · Alinea Analytics
+  </div>
+  <div class="footer-copy">
+    内部参考资料 · 请勿外传 &nbsp;·&nbsp; © 2026 游卡网络 战略分析组<br>
+    数据截至2026年3月6日
+  </div>
+</div>
+
+</div>
+</body>
+</html>
